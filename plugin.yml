@@ -1,0 +1,7 @@
+name: Sabotage
+version: 0.0.1
+main: oldschoolproject.Main
+author: Suvacco
+description: A Sabotage plugin for the Old School Project
+commands:
+  
