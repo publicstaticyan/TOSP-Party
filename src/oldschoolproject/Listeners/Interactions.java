@@ -3,19 +3,27 @@ package oldschoolproject.Listeners;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
+import oldschoolproject.Main;
 import oldschoolproject.Managers.GameManager;
 import oldschoolproject.Managers.GameType;
 
 public class Interactions implements Listener {
 	
+	public Interactions() {
+		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+	}
+	
 	@EventHandler
 	public void openVoteInventory(PlayerInteractEvent e) {
 		if (!GameManager.isPlaying()) {
-			
+			if (e.getItem().getType() == Material.CHEST) {
+				e.getPlayer().performCommand("open");
+			}
 		}
 	}
 	

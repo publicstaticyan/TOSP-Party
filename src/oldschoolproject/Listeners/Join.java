@@ -8,10 +8,15 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import oldschoolproject.Main;
 import oldschoolproject.Managers.GameManager;
 import oldschoolproject.Utils.Methods;
 
 public class Join implements Listener {
+	
+	public Join() {
+		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+	}
 	
 	@EventHandler
 	public void preJoin(AsyncPlayerPreLoginEvent e) {
