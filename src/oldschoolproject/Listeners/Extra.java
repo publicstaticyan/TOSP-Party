@@ -17,7 +17,7 @@ public class Extra implements Listener {
 	@EventHandler
 	public void hotbarItemLock(InventoryClickEvent e) {
 		if (!GameManager.isPlaying()) {
-			if (e.getCurrentItem() != null && !e.getWhoClicked().isOp()) {
+			if (e.getCurrentItem() != null) {
 				e.setCancelled(true);
 			}
 		}
