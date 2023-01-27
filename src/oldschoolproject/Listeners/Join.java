@@ -27,6 +27,8 @@ public class Join implements Listener {
 	
 	@EventHandler
 	public void join(PlayerJoinEvent e) {
+		e.setJoinMessage(null);
+		
 		Player p = e.getPlayer();
 	
 		p.getInventory().clear();
@@ -41,7 +43,7 @@ public class Join implements Listener {
 		
 		GameManager.addPlayer(p);
 		
-		p.getInventory().setItem(4, Methods.ci(Material.CHEST, 1, "§aJogar"));
+		p.getInventory().setItem(4, Methods.ci(Material.CHEST, 1, "§6Votação"));
 		
 	}
 }

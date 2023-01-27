@@ -1,5 +1,5 @@
 package oldschoolproject.Managers;
 
 public enum GameType {
-	SABOTAGE, HG, PARTY, NONE;
+	SABOTAGE, HOTPOTATO, NONE;
 }

@@ -1,4 +1,4 @@
-package oldschoolproject.Commands.Builder;
+package oldschoolproject.Commands.Framework;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

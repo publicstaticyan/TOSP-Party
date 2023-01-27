@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class GameManager {
 	
 	private static GameType currentGame = GameType.NONE;
-	private static List<Player> players = new ArrayList<>();
+	private static List<Player> serverPlayers = new ArrayList<>();
 	
 	public static GameType getCurrentGame() {
 		return currentGame;
@@ -18,7 +18,7 @@ public class GameManager {
 		return getCurrentGame() != GameType.NONE;
 	}
 	
-	public static void setCurrentGame(GameType game) {
+	public static void setGame(GameType game) {
 		currentGame = game;
 		
 		switch (currentGame) {
@@ -27,11 +27,7 @@ public class GameManager {
 			
 			break;
 			
-		case HG:
-					
-			break;
-			
-		case PARTY:
+		case HOTPOTATO:
 			
 			break;
 			
@@ -42,14 +38,14 @@ public class GameManager {
 	}
 	
 	public static void addPlayer(Player player) {
-		players.add(player);
+		serverPlayers.add(player);
 	}
 	
 	public static void removePlayer(Player player) {
-		players.remove(player);
+		serverPlayers.remove(player);
 	}
 	
 	public static List<Player> getPlayers() {
-		return players;
+		return serverPlayers;
 	}
 }
