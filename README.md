@@ -1,2 +1,2 @@
-# Sabotage
- A Sabotage plugin for the Old School Project
+# Old School Project
+ A Minecraft plugin for minigames selection through a voting system
