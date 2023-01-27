@@ -1,4 +1,4 @@
-package oldschoolproject.Commands.Framework;
+package oldschoolproject.Utils.CommandFramework;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

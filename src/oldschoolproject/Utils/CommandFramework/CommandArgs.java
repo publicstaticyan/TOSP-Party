@@ -1,4 +1,4 @@
-package oldschoolproject.Commands.Framework;
+package oldschoolproject.Utils.CommandFramework;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
