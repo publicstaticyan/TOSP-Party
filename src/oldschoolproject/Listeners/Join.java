@@ -3,7 +3,6 @@ package oldschoolproject.Listeners;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -11,8 +10,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import oldschoolproject.Main;
 import oldschoolproject.Managers.GameManager;
 import oldschoolproject.Utils.Methods;
+import oldschoolproject.Utils.Base.BaseListener;
 
-public class Join implements Listener {
+public class Join extends BaseListener {
 	
 	public Join() {
 		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
@@ -43,7 +43,7 @@ public class Join implements Listener {
 		
 		GameManager.addPlayer(p);
 		
-		p.getInventory().setItem(4, Methods.ci(Material.CHEST, 1, "§6Votação"));
+		p.getInventory().setItem(4, Methods.ci(Material.CHEST, 1, "§a§lVotação"));
 		
 	}
 }

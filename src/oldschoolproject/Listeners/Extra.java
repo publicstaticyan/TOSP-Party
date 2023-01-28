@@ -1,14 +1,15 @@
 package oldschoolproject.Listeners;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
 import oldschoolproject.Main;
 import oldschoolproject.Managers.GameManager;
+import oldschoolproject.Utils.Base.BaseListener;
 
-public class Extra implements Listener {
+public class Extra extends BaseListener {
 	
 	public Extra() {
 		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
@@ -17,8 +18,10 @@ public class Extra implements Listener {
 	@EventHandler
 	public void hotbarItemLock(InventoryClickEvent e) {
 		if (!GameManager.isPlaying()) {
-			if (e.getCurrentItem() != null) {
-				e.setCancelled(true);
+			if (!e.getWhoClicked().isOp()) {
+				if (e.getCurrentItem() != null && e.getCurrentItem().getType() == Material.CHEST) {
+					e.setCancelled(true);
+				}
 			}
 		}
 	}

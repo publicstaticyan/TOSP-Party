@@ -1,27 +1,26 @@
 package oldschoolproject.Commands;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import oldschoolproject.Main;
-import oldschoolproject.Utils.CommandFramework.Command;
-import oldschoolproject.Utils.CommandFramework.CommandArgs;
+import oldschoolproject.Utils.Base.BaseCommand;
 
-public class Game {
+public class Game extends BaseCommand {
 
 	public Game() {
-		Main.commandFramework.registerCommands(this);
+		super("game");
 	}
-	
-	@Command(name = "game", permission = "admin")
-	public void commandExecute(CommandArgs args) {
-		Player p = (Player)args.getSender();
+
+	@Override
+	public void onCommand(CommandSender sender, String[] args) {
+		Player p = (Player)sender;
 		
-		if (args.length() == 0) {
-			p.sendMessage("§cErro: /game (start | reset | forcestart)");
+		if (args.length == 0) {
+			p.sendMessage("§cErro: /game start | reset | forcestart");
 			return;
 		}
 		
-		switch (args.getArgs(0)) {
+		switch (args[0]) {
 		
 		case "start":
 			p.sendMessage("start");
@@ -33,6 +32,10 @@ public class Game {
 			
 		case "forcestart":
 			p.sendMessage("forcestart");
+			break;
+			
+		default:
+			p.sendMessage("§cErro: /game start | reset | forcestart");
 			break;
 		}
 	}

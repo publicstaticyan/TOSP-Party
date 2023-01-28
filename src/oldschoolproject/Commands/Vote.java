@@ -1,25 +1,24 @@
 package oldschoolproject.Commands;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import oldschoolproject.Main;
 import oldschoolproject.Listeners.Inventories.VoteInventory;
 import oldschoolproject.Managers.GameManager;
-import oldschoolproject.Managers.VoteManager;
-import oldschoolproject.Utils.CommandFramework.Command;
-import oldschoolproject.Utils.CommandFramework.CommandArgs;
+import oldschoolproject.Utils.Base.BaseCommand;
 
-public class Vote {
-	
+public class Vote extends BaseCommand {
+
 	public Vote() {
-		Main.commandFramework.registerCommands(this);
+		super("vote");
 	}
-	
-	@Command(name = "open")
-	public void commandExecute(CommandArgs args) {
-		Player p = (Player)args.getSender();
+
+	@Override
+	public void onCommand(CommandSender sender, String[] args) {
 		if (!GameManager.isPlaying()) {
+			Player p = (Player)sender;
 			VoteInventory.openInventory(p);
 		}
 	}
+
 }

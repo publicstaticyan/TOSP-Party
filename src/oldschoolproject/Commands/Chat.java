@@ -1,22 +1,22 @@
 package oldschoolproject.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 
-import oldschoolproject.Main;
-import oldschoolproject.Utils.CommandFramework.Command;
-import oldschoolproject.Utils.CommandFramework.CommandArgs;
+import oldschoolproject.Utils.Base.BaseCommand;
 
-public class Chat {
+public class Chat extends BaseCommand {
 
 	public Chat() {
-		Main.commandFramework.registerCommands(this);
+		super("chatclear");
 	}
-	
-	@Command(name = "chat", permission = "admin")
-	public void commandExecute(CommandArgs args) {
+
+	@Override
+	public void onCommand(CommandSender sender, String[] args) {
 		for (int i = 0; i < 100; i++) {
 			Bukkit.broadcastMessage("");
 		}
-		args.getPlayer().sendMessage("§aChat limpo com sucesso!");
+		sender.sendMessage("§aO chat foi limpo");
 	}
+
 }
