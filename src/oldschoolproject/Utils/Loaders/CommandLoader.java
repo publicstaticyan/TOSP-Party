@@ -42,7 +42,7 @@ public class CommandLoader {
 					}
 					registerCommand((CommandExecutor) command, command.getName(), command.getDescription(), command.getAliases()).setTabCompleter((TabCompleter) command);
 				} catch (Exception e) {
-					Main.getInstance().getLogger().warning("Erro ao carregar o comando " + commandClass.getName() + " (With TabCompleter)");
+					Main.getInstance().getLogger().warning("Erro ao carregar o comando " + commandClass.getName() + " (TabCompleter)");
 				}
 				continue;
 			}
