@@ -9,6 +9,8 @@ import oldschoolproject.Utils.Loaders.ListenerLoader;
 
 public class Main extends JavaPlugin {
 	
+	public static ScoreBuilder score;
+	
 	public static Main getInstance() {
 		return getPlugin(Main.class);
 	}
@@ -20,7 +22,7 @@ public class Main extends JavaPlugin {
 		
 		new AutoReloader();
 		
-		new ScoreBuilder("OLD SCHOOL");
+		score = new ScoreBuilder("OLD SCHOOL");
 		
 		getLogger().info("[Main] Plugin loaded");
 		

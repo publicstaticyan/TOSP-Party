@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import oldschoolproject.Main;
+import oldschoolproject.Managers.GameType;
+import oldschoolproject.Managers.VoteManager;
 import oldschoolproject.Scoreboard.ColorScroller.ScrollType;
 
 import java.util.AbstractMap;
@@ -27,43 +29,49 @@ public class ScoreBuilder {
 	private String title;
 
 	private Map<String, Integer> scores;
-
+	
 	private List<Team> teams;
+	
+	private ColorScroller cs;
+	
+	private Objective obj;
 	
 	public ScoreBuilder(String title) {
 		this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 		this.title = title;
 		this.scores = Maps.newLinkedHashMap();
 		this.teams = Lists.newArrayList();
-		
+		this.cs = new ColorScroller(ChatColor.GOLD, title, "§e", "§e", "§e", true, false, ScrollType.FORWARD);
 		generate();
 	}
 	
 	public void generate() {
 		
-		ColorScroller cs = new ColorScroller(ChatColor.GOLD, "OLD SCHOOL", "§e", "§e", "§e", true, false, ScrollType.FORWARD);
-		
 		blankLine();
 		add("§aFaçam seus votos!");
 		blankLine();
-		add("Sabotador: §60");
-		add("Batata-Quente: §60");
+		add("Sabotador: §6" + VoteManager.getVotes(GameType.SABOTAGE));
+		add("Batata-Quente: §6" + VoteManager.getVotes(GameType.HOTPOTATO));
 		blankLine();
-		add("Timer: §70");
+		add("Teste: ");
+		add("Timer: §7" + VoteManager.getCountdown());
 	    blankLine();
-		build();
 	    
+		build();
+		
+		run();
+	}
+	
+	public void run() {
 		new BukkitRunnable() {
 			public void run() {
-				for (Player all : Bukkit.getOnlinePlayers()) {
-					send(all);
-				}
+				// update();
+				send();
 			}
-		}.runTaskTimer(Main.getInstance(), 0, 1);
+		}.runTaskTimer(Main.getInstance(), 0, 20);
+		
 		new BukkitRunnable() {
-			@Override
 			public void run() {
-				
                 if(cs.getScrollType() == ScrollType.FORWARD) {
                     if(cs.getPosition() == cs.getString().length()) {
                         cs.setScrollType(ScrollType.BACKWARD);
@@ -83,8 +91,12 @@ public class ScoreBuilder {
 		add(ChatColor.WHITE + " ");
 	}
 
-	public void add(String text) {
-		setScore(text, null);
+	public void add(String preffix) {
+		setScore(preffix, null);
+	}
+	
+	public void add(String preffix, String suffix) {
+		setScore(preffix + "^^" + suffix, null);
 	}
 
 	public void setScore(String text, Integer score) {
@@ -101,7 +113,7 @@ public class ScoreBuilder {
 	
 	@SuppressWarnings("deprecation")
 	public void build() {
-		Objective obj = scoreboard.registerNewObjective(this.title, "dummy");
+		obj = scoreboard.registerNewObjective(this.title, "dummy");
 		obj.setDisplayName(title);
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
@@ -109,17 +121,26 @@ public class ScoreBuilder {
 		
 		for (Entry<String, Integer> text : scores.entrySet()) { // copia pares Key e Value do map "scores" para o map "text"
 			
-			Entry<Team, String> team = createTeam(text.getKey()); // Cria um map que contem um time associado com a linha da scoreboard
+			// Divisão de strings baseado no ^^
+			
+			String teamName = text.getKey();
+			
+			if (teamName.contains("^^")) {
+				
+			}
+			
+			Entry<Team, String> team = createTeam(teamName); // Cria um map que contem um time associado com a linha da scoreboard
 			
 //			Integer score = Integer.valueOf((text.getValue() != null) ? ((Integer) text.getValue()).intValue() : index);
 			
-			FastOfflinePlayer offlinePlayer = new FastOfflinePlayer(team.getValue());
+			FastOfflinePlayer offlinePlayer = new FastOfflinePlayer(team.getValue()); // team.getValue + 
 			
 //			if (team.getKey() != null) {
 //				((Team) team.getKey()).addPlayer(offlinePlayer);
 //			}
 			
 			obj.getScore(offlinePlayer).setScore(index);
+			
 			index--;
 		}
 	}
@@ -148,19 +169,26 @@ public class ScoreBuilder {
 	}
 
 	public void reset() {
-		this.title = null;
 		this.scores.clear();
-		for (Team t : this.teams)
+		for (Team t : this.teams) {
 			t.unregister();
+		}
 		this.teams.clear();
+		
+		scoreboard.getObjective(title).unregister();
+	}
+	
+//	public void update() {
+//		obj.getScoreboard().get
+//	}
+	
+	public void send() {
+		for (Player all : Bukkit.getOnlinePlayers()) {
+			all.setScoreboard(scoreboard);
+		}
 	}
 
 	public Scoreboard getScoreboard() {
 		return this.scoreboard;
-	}
-
-	public void send(Player... players) {
-		for (Player p : players)
-			p.setScoreboard(scoreboard);
 	}
 }
