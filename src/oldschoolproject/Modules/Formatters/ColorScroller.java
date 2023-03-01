@@ -1,4 +1,4 @@
-package oldschoolproject.Scoreboard;
+package oldschoolproject.Modules.Formatters;
 
 import org.bukkit.ChatColor;
 

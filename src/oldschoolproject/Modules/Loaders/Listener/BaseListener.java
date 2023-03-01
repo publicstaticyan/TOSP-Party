@@ -1,4 +1,4 @@
-package oldschoolproject.Utils.Base;
+package oldschoolproject.Modules.Loaders.Listener;
 
 import org.bukkit.event.Listener;
 

@@ -1,4 +1,4 @@
-package oldschoolproject.Utils.Base;
+package oldschoolproject.Modules.Loaders.Command;
 
 import java.util.List;
 import org.bukkit.command.Command;

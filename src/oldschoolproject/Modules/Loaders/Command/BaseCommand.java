@@ -1,4 +1,4 @@
-package oldschoolproject.Utils.Base;
+package oldschoolproject.Modules.Loaders.Command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

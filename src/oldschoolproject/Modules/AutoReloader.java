@@ -1,4 +1,4 @@
-package oldschoolproject.Utils;
+package oldschoolproject.Modules;
 
 import java.io.File;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class AutoReloader {
 	
 	private final Map<String, Long> timeSinceLastChanged = new HashMap<>();
 	
-	void checkIfModified() {
+	private void checkIfModified() {
 		File folder = new File("plugins/");
 		if (folder.exists() && folder.isDirectory()) {
 			File[] listOfFiles = folder.listFiles();
@@ -43,7 +43,7 @@ public class AutoReloader {
 		}
 	}
 
-	void logTimes() {
+	private void logTimes() {
 		File folder = new File("plugins/");
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {

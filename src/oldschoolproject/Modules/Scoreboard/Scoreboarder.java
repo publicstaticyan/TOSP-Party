@@ -1,4 +1,4 @@
-package oldschoolproject.Scoreboard;
+package oldschoolproject.Modules.Scoreboard;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,8 @@ import org.bukkit.scoreboard.Team;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import oldschoolproject.Scoreboard.ColorScroller.ScrollType;
+import oldschoolproject.Modules.Formatters.ColorScroller;
+import oldschoolproject.Modules.Formatters.ColorScroller.ScrollType;
 
 public class Scoreboarder {
 	
@@ -51,5 +52,4 @@ public class Scoreboarder {
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
 	
-	public void 
 }

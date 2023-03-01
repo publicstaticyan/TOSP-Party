@@ -1,4 +1,4 @@
-package oldschoolproject.Scoreboard;
+package oldschoolproject.Modules.Formatters;
 
 import com.google.common.base.Charsets;
 import java.util.Map;

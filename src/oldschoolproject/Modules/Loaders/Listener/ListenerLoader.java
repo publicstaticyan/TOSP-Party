@@ -1,11 +1,10 @@
-package oldschoolproject.Utils.Loaders;
+package oldschoolproject.Modules.Loaders.Listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import oldschoolproject.Main;
-import oldschoolproject.Utils.ClassGetter;
-import oldschoolproject.Utils.Base.BaseListener;
+import oldschoolproject.Modules.ClassGetter;
 
 public class ListenerLoader {
 	

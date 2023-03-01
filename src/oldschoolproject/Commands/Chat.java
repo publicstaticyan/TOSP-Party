@@ -3,7 +3,7 @@ package oldschoolproject.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import oldschoolproject.Utils.Base.BaseCommand;
+import oldschoolproject.Modules.Loaders.Command.BaseCommand;
 
 public class Chat extends BaseCommand {
 

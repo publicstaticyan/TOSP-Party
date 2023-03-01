@@ -2,14 +2,10 @@ package oldschoolproject;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import oldschoolproject.Scoreboard.ScoreBuilder;
-import oldschoolproject.Utils.AutoReloader;
-import oldschoolproject.Utils.Loaders.CommandLoader;
-import oldschoolproject.Utils.Loaders.ListenerLoader;
+import oldschoolproject.Modules.AutoReloader;
+import oldschoolproject.Modules.Loaders.AutoRegister;
 
 public class Main extends JavaPlugin {
-	
-	public static ScoreBuilder score;
 	
 	public static Main getInstance() {
 		return getPlugin(Main.class);
@@ -17,12 +13,9 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		
-		ListenerLoader.loadListenersAndRegister();
-		CommandLoader.loadCommandsAndRegister();
+		new AutoRegister();
 		
 		new AutoReloader();
-		
-		score = new ScoreBuilder("OLD SCHOOL");
 		
 		getLogger().info("[Main] Plugin loaded");
 		

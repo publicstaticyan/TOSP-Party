@@ -1,4 +1,4 @@
-package oldschoolproject.Utils.Loaders;
+package oldschoolproject.Modules.Loaders.Command;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -12,9 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.Plugin;
 
 import oldschoolproject.Main;
-import oldschoolproject.Utils.ClassGetter;
-import oldschoolproject.Utils.Base.BaseCommand;
-import oldschoolproject.Utils.Base.BaseCommandWithTab;
+import oldschoolproject.Modules.ClassGetter;
 
 public class CommandLoader {
 
@@ -27,7 +25,7 @@ public class CommandLoader {
 			commandmapfield.setAccessible(true);
 			commandMap = (SimpleCommandMap) commandmapfield.get(Bukkit.getServer());
 		} catch (Exception e) {
-			Bukkit.getLogger().warning("Erro ao carregar Command Map!");
+			Bukkit.getLogger().warning("Erro ao tentar acessar Command Map");
 		}
 		int i = 0;
 		for (Class<?> commandClass : (Iterable<Class<?>>) ClassGetter.getClassesForPackage(Main.getInstance(), "oldschoolproject.Commands")) {
