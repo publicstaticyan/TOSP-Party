@@ -7,7 +7,11 @@ import oldschoolproject.Managers.Game.GameType;
 
 public class CTF {
 	
-	static GameManager gm = new GameManager(GameType.CAPTURE_THE_FLAG, 15, 50, 120, 15, 600);
+	static GameManager gm;
+
+	public CTF() {
+		gm = new GameManager(GameType.CAPTURE_THE_FLAG, 4, 50, 600);
+	}
 	
 	public static void joinGame(Player p) {
 		gm.addPlayer(p);
@@ -16,5 +20,12 @@ public class CTF {
 	public static void quitGame(Player p) {
 		gm.removePlayer(p);
 	}
-
+	
+	public static void joinGameSpectator(Player p) {
+		gm.addSpectator(p);
+	}
+	
+	public static void quitGameSpectator(Player p) {
+		gm.removeSpectator(p);
+	}
 }

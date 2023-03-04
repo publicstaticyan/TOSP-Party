@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import oldschoolproject.Modules.ItemBuilder;
+import oldschoolproject.Modules.Builders.ItemBuilder;
 import oldschoolproject.Modules.Loaders.Listener.BaseListener;
 
 public class Join extends BaseListener {
