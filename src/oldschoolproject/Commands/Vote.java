@@ -1,13 +1,12 @@
-//package oldschoolproject.Commands;
+package oldschoolproject.Commands;
 //
 //import org.bukkit.command.CommandSender;
 //import org.bukkit.entity.Player;
 //
 //import oldschoolproject.Managers.Game.GameManager;
-//import oldschoolproject.Managers.Voting.VoteInventory;
 //import oldschoolproject.Modules.Loaders.Command.BaseCommand;
 //
-//public class Vote extends BaseCommand {
+public class Vote {
 //
 //	public Vote() {
 //		super("vote");
@@ -21,4 +20,4 @@
 //		}
 //	}
 //
-//}
+}

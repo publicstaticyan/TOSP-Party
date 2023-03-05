@@ -1,6 +1,7 @@
 package oldschoolproject.Managers.Game;
 
 public enum GameType {
+	
 	CAPTURE_THE_FLAG("CTF"), HOT_POTATO("HotPotato");
 	
 	String displayName;
@@ -11,5 +12,9 @@ public enum GameType {
 	
 	String getDisplayName() {
 		return displayName;
+	}
+	
+	void beginGame() {
+		
 	}
 }

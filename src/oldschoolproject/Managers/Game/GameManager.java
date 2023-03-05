@@ -3,12 +3,12 @@ package oldschoolproject.Managers.Game;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import oldschoolproject.Main;
+import oldschoolproject.Managers.Events.GameStageEvent;
 import oldschoolproject.Modules.Builders.MessageBuilder;
 import oldschoolproject.Modules.Builders.MessageBuilder.MessageType;
 
@@ -40,11 +40,13 @@ public class GameManager {
 		this.setGameStage(GameStage.WAITING);
 		this.setCountdownTime(180);
 		this.setCurrentTime(0);
+		
 		this.playersList = new ArrayList<>();
 		this.spectatorsList = new ArrayList<>();
-		this.paused = false;
 		this.mb = new MessageBuilder(gameType.getDisplayName());
 		
+		this.paused = false;
+
 		this.startTickingLobby();
 	}
 	
@@ -134,6 +136,8 @@ public class GameManager {
 				case 9:
 					broadcastMessage(mb.setMessage("§7A festa vai começar em §e10 segundos!").setType(MessageType.WARNING).toString());
 					setGameStage(GameStage.BEGGINING);
+					
+					// Teleport players to arena
 					break;
 				case 4:
 					broadcastMessage(mb.setMessage("§7A festa vai começar em §a5...").setType(MessageType.WARNING).toString());
@@ -160,22 +164,6 @@ public class GameManager {
 		}.runTaskTimer(Main.getInstance(), 0, 20 * 1);
 	}
 	
-
-	
-//	private String getGameLogo(ChatColor logoColor, ChatColor bracketsColor) {
-//		switch (this.getGameType()) {
-//		
-//		case CAPTURE_THE_FLAG:
-//			return bracketsColor + "[" + logoColor + "Capture the Flag" + bracketsColor + "]";
-//			
-//		case HOT_POTATO:
-//			
-//			return bracketsColor + "[" + logoColor + "Hot Potato" + bracketsColor + "]";
-//		}
-//		
-//		return bracketsColor + "[" + logoColor + "Lobby" + bracketsColor + "]";
-//	}
-	
 	public void addPlayer(Player p) {
 		if (getPlayersQuantity() >= getMaxPlayers()) {
 			p.sendMessage("§cNão foi possivel juntar-se, este lobby já está lotado!");
@@ -186,6 +174,10 @@ public class GameManager {
 			p.sendMessage("§cNão foi possivel juntar-se, este lobby já começou!");
 			return;
 		}
+		
+		// teleport to game lobby location
+		// show only players in the same lobby
+		// use same lobby world
 		
 		playersList.add(p);
 	}
@@ -218,6 +210,11 @@ public class GameManager {
 
 	public void setGameStage(GameStage gameStage) {
 		this.gameStage = gameStage;
+		Bukkit.getServer().getPluginManager().callEvent(new GameStageEvent(this));
+	}
+	
+	public List<Player> getPlayersList() {
+		return this.playersList;
 	}
 
 	public int getMinPlayers() {

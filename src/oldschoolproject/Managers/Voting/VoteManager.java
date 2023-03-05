@@ -1,4 +1,4 @@
-//package oldschoolproject.Managers.Voting;
+package oldschoolproject.Managers.Voting;
 //
 //import java.util.HashMap;
 //import java.util.Map;
@@ -12,7 +12,7 @@
 //import oldschoolproject.Managers.Game.GameType;
 //import oldschoolproject.Modules.Formatters.TimeConverter;
 //
-//public class VoteManager {
+public class VoteManager {
 //	
 //	static Map<Player, GameType> playerVote = new HashMap<>();
 //	static Map<GameType, Integer> voteTable = new HashMap<>();
@@ -79,4 +79,4 @@
 ////			Bukkit.getLogger().info(key + " : " + votes);
 ////		}
 ////	}
-//}
+}

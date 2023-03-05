@@ -4,8 +4,19 @@ import org.bukkit.entity.Player;
 
 import oldschoolproject.Managers.Game.GameManager;
 import oldschoolproject.Managers.Game.GameType;
+import oldschoolproject.Modules.Loaders.Listener.BaseListener;
 
-public class CTF {
+public class CTF extends BaseListener {
+	
+	/*
+	 * 
+	 * @Custom Event
+	 * The server is always listening to it
+	 * The event tracks the gm's GameStage
+	 * when the game's stage hits beggining it triggers the event
+	 * and the event teleports all players to the corresponding game arena
+	 * 
+	 */
 	
 	static GameManager gm;
 

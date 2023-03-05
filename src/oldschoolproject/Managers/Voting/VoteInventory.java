@@ -1,4 +1,4 @@
-//package oldschoolproject.Managers.Voting;
+package oldschoolproject.Managers.Voting;
 //
 //import java.util.Arrays;
 //
@@ -16,7 +16,7 @@
 //import oldschoolproject.Managers.Game.GameType;
 //import oldschoolproject.Modules.Loaders.Listener.BaseListener;
 //
-//public class VoteInventory extends BaseListener {
+public class VoteInventory {
 //	
 //	public static Inventory voteInventory = Bukkit.createInventory(null, 27, "§a§lVotação");
 //	
@@ -70,4 +70,4 @@
 //		}
 //	}
 //
-//}
+}

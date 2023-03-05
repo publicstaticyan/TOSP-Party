@@ -1,4 +1,4 @@
-//package oldschoolproject.Modules.Scoreboard;
+package oldschoolproject.Modules.Scoreboard;
 //
 //import com.google.common.collect.Lists;
 //import com.google.common.collect.Maps;
@@ -24,7 +24,7 @@
 //import org.bukkit.scoreboard.Scoreboard;
 //import org.bukkit.scoreboard.Team;
 //
-//public class ScoreBuilder {
+public class ScoreBuilder {
 //	
 //	public Scoreboard scoreboard;
 //
@@ -193,4 +193,4 @@
 //	public Scoreboard getScoreboard() {
 //		return this.scoreboard;
 //	}
-//}
+}

@@ -5,16 +5,22 @@ import org.bukkit.entity.Player;
 
 import oldschoolproject.Modules.Loaders.Command.BaseCommand;
 
-public class GameM extends BaseCommand {
+public class Lobby extends BaseCommand {
 
-	public GameM() {
-		super("gamem");
+	public Lobby() {
+		super("lobby");
 	}
-	
+
+	@Override
 	public void onCommand(CommandSender sender, String[] args) {
 		Player p = (Player)sender;
 		
 		if (args.length == 0) {
+			p.sendMessage("§c/lobby [ctf] [set]");
+			return;
+		}
+		
+		if (args[0].equalsIgnoreCase("ctf")) {
 			
 		}
 		
