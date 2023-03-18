@@ -3,9 +3,9 @@ package oldschoolproject.Modules.Loaders;
 import oldschoolproject.Modules.Loaders.Command.CommandLoader;
 import oldschoolproject.Modules.Loaders.Listener.ListenerLoader;
 
-public class AutoRegister {
+public class RegistrationLoader {
 	
-	public AutoRegister() {
+	public RegistrationLoader() {
 		ListenerLoader.loadListenersAndRegister();
 		CommandLoader.loadCommandsAndRegister();
 	}

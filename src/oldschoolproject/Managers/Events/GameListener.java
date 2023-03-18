@@ -17,20 +17,20 @@ public class GameListener extends BaseListener {
 	public void gameStageListener(GameStageEvent event) {
 		GameManager gameManager = event.getGameManager();
 		
-		if (gameManager.getGameType() == GameType.CAPTURE_THE_FLAG) {
-			if (gameManager.getGameStage() == GameStage.BEGGINING) {
-				if (Main.getInstance().getConfig().get("locations.cft.lobby") == null) {
-					return;
-				}
-				
-				for (Player players : gameManager.getPlayersList()) {
-					players.teleport(new Location(Bukkit.getWorld("world"),
-						Main.getInstance().getConfig().getInt("locations.cft.lobby.x"),
-						Main.getInstance().getConfig().getInt("locations.cft.lobby.y"),
-						Main.getInstance().getConfig().getInt("locations.cft.lobby.z")
-					));
-				}
-			}
-		}
+//		if (gameManager.getGameType() == GameType.CAPTURE_THE_FLAG) {
+//			if (gameManager.getGameStage() == GameStage.BEGGINING) {
+//				if (Main.getInstance().getConfig().get("locations.cft.lobby") == null) {
+//					return;
+//				}
+//				
+//				for (Player players : gameManager.getPlayersList()) {
+//					players.teleport(new Location(Bukkit.getWorld("world"),
+//						Main.getInstance().getConfig().getInt("locations.cft.lobby.x"),
+//						Main.getInstance().getConfig().getInt("locations.cft.lobby.y"),
+//						Main.getInstance().getConfig().getInt("locations.cft.lobby.z")
+//					));
+//				}
+//			}
+//		}
 	}
 }

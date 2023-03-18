@@ -1,4 +1,4 @@
-package oldschoolproject.Managers.Minigame;
+package oldschoolproject.Minigames;
 
 import org.bukkit.entity.Player;
 
@@ -10,6 +10,7 @@ public class CTF extends BaseListener {
 	
 	/*
 	 * 
+	 * TODO
 	 * @Custom Event
 	 * The server is always listening to it
 	 * The event tracks the gm's GameStage

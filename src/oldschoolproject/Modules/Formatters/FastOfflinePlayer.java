@@ -81,122 +81,122 @@ public class FastOfflinePlayer implements OfflinePlayer {
 
 	@Override
 	public PlayerProfile getPlayerProfile() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic, int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic, int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void setStatistic(Statistic statistic, int newValue) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public int getStatistic(Statistic statistic) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic, Material material) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic, Material material) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public int getStatistic(Statistic statistic, Material material) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic, Material material, int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic, Material material, int amount) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void setStatistic(Statistic statistic, Material material, int newValue) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public int getStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public void incrementStatistic(Statistic statistic, EntityType entityType, int amount)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void decrementStatistic(Statistic statistic, EntityType entityType, int amount) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void setStatistic(Statistic statistic, EntityType entityType, int newValue) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public Location getLastDeathLocation() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 }

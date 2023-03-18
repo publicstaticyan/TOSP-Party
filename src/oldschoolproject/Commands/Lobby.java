@@ -16,14 +16,13 @@ public class Lobby extends BaseCommand {
 		Player p = (Player)sender;
 		
 		if (args.length == 0) {
-			p.sendMessage("§c/lobby [ctf] [set]");
+			p.sendMessage("§c/lobby [set : remove] [game]");
 			return;
 		}
 		
-		if (args[0].equalsIgnoreCase("ctf")) {
+		if (args[0].equalsIgnoreCase("")) {
 			
 		}
-		
 	}
 
 }

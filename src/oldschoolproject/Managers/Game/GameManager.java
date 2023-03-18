@@ -5,29 +5,22 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import oldschoolproject.Main;
 import oldschoolproject.Managers.Events.GameStageEvent;
-import oldschoolproject.Modules.Builders.MessageBuilder;
-import oldschoolproject.Modules.Builders.MessageBuilder.MessageType;
 
 public class GameManager {
 	
 	private GameType gameType;
 	private GameStage gameStage;
+	private GameTimer gameTimer;
 	
 	private int minPlayers;
 	private int maxPlayers;
 
-	private int timeCoutdown;
-	private int timeCurrent;
 	private int timeLimit;
 
 	private List<Player> playersList;
 	private List<Player> spectatorsList;
-	
-	private MessageBuilder mb;
 	
 	private boolean paused;
 	
@@ -38,130 +31,15 @@ public class GameManager {
 		this.timeLimit = timeLimit;
 		
 		this.setGameStage(GameStage.WAITING);
-		this.setCountdownTime(180);
-		this.setCurrentTime(0);
 		
 		this.playersList = new ArrayList<>();
 		this.spectatorsList = new ArrayList<>();
-		this.mb = new MessageBuilder(gameType.getDisplayName());
+		
+		this.gameTimer = new GameTimer(this, timeLimit);
 		
 		this.paused = false;
-
-		this.startTickingLobby();
-	}
-	
-	private void broadcastMessage(String message) {
-		for (Player players : playersList) {
-			players.sendMessage(message);
-		}
-	}
-	
-	private void startCheckingPlayers() {
-		new BukkitRunnable() {
-			public void run() {
-				if (getPlayersQuantity() < getMinPlayers()) {
-					broadcastMessage(mb.setMessage("§cPoxa... Não haviam jogadores suficientes e o contador reiniciou!").setType(MessageType.DANGER).toString());
-					resetWaitingTimer();
-					setGameStage(GameStage.WAITING);
-					cancel();
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 0, 20 * 1);
-	}
-	
-	private void resetWaitingTimer() {
-		this.setCountdownTime(180 + 5);
-	}
-	
-	private void startTickingGame() {
-		setGameStage(GameStage.PLAYING);
 		
-		new BukkitRunnable() {
-			
-			int tickingLimitTimer = getTimeLimit();
-			
-			public void run() {
-				setCurrentTime(getCurrentTime() + 1);
-				
-				if (!isPaused()) {
-					tickingLimitTimer--;
-				}
-				
-				switch (tickingLimitTimer) {
-				case 59:
-					
-					broadcastMessage(mb.setMessage("§7O tempo vai se esgotar! Terminem o jogo antes que seja tarde!").setType(MessageType.DANGER).toString());
-					break;
-				case 30:
-					broadcastMessage(mb.setMessage("§cO tempo vai se esgotar! Terminem o jogo antes que seja tarde!").setType(MessageType.DANGER).toString());
-					break;
-				case 10:
-					broadcastMessage(mb.setMessage("§4O tempo vai se esgotar! Terminem o jogo antes que seja tarde!").setType(MessageType.DANGER).toString());
-					break;
-				case 1:
-					broadcastMessage(mb.setMessage("§4TEMPO ESGOTADO!").setType(MessageType.DANGER).toString());
-					break;
-				case 0:
-					cancel();
-					break;
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 0, 20);
-	}
-	
-	private void startTickingLobby() {
-		new BukkitRunnable() {
-			
-			int tickingWaitingTimer = getCountdownTime();
-			
-			public void run() {
-				
-				if (!isPaused()) {
-					tickingWaitingTimer--;
-				}
-				
-				switch (tickingWaitingTimer) {
-				case 179:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §f3 minutos!").setType(MessageType.WARNING).toString());
-					break;
-				case 119:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §f2 minutos!").setType(MessageType.WARNING).toString());
-					break;
-				case 59:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §f1 minuto!").setType(MessageType.WARNING).toString());
-					break;
-				case 29:
-					startCheckingPlayers();
-					break;
-				case 9:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §e10 segundos!").setType(MessageType.WARNING).toString());
-					setGameStage(GameStage.BEGGINING);
-					
-					// Teleport players to arena
-					break;
-				case 4:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §a5...").setType(MessageType.WARNING).toString());
-					break;
-				case 3:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §a4...").setType(MessageType.WARNING).toString());
-					break;
-				case 2:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §a3...").setType(MessageType.WARNING).toString());
-					break;
-				case 1:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §a2...").setType(MessageType.WARNING).toString());
-					break;
-				case 0:
-					broadcastMessage(mb.setMessage("§7A festa vai começar em §a1...").setType(MessageType.WARNING).toString());
-					break;
-				case -1:
-					broadcastMessage(mb.setMessage("§aA festa começou! Bom jogo a todos!").setType(MessageType.COMMON).toString());
-					startTickingGame();
-					cancel();
-					break;
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 0, 20 * 1);
+		this.gameTimer.startLobbyCoundown();
 	}
 	
 	public void addPlayer(Player p) {
@@ -175,6 +53,7 @@ public class GameManager {
 			return;
 		}
 		
+		// TODO
 		// teleport to game lobby location
 		// show only players in the same lobby
 		// use same lobby world
@@ -225,22 +104,6 @@ public class GameManager {
 		return maxPlayers;
 	}
 
-	public int getCountdownTime() {
-		return timeCoutdown;
-	}
-
-	public int getCurrentTime() {
-		return timeCurrent;
-	}
-	
-	public void setCountdownTime(int seconds) {
-		this.timeCoutdown = seconds;
-	}
-
-	public void setCurrentTime(int currentTime) {
-		this.timeCurrent = currentTime;
-	}
-
 	public int getTimeLimit() {
 		return timeLimit;
 	}
@@ -253,7 +116,7 @@ public class GameManager {
 		this.paused = paused;
 	}
 	
-	private int getPlayersQuantity() {
+	public int getPlayersQuantity() {
 		return playersList.size();
 	}
 }
