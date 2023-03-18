@@ -17,7 +17,7 @@ public class Chat extends BaseCommand {
 		
 		if (args.length == 0) {
 			sender.sendMessage("§cErro: /chat [clear | stop | resume]");
-			
+			return;
 		}
 		
 		if (args[0].equalsIgnoreCase("clear")) {

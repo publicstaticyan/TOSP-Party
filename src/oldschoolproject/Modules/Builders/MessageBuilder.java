@@ -4,13 +4,14 @@ public class MessageBuilder {
 	
 	private String message;
 	private String prefix;
+	private String tag;
 	
-	public MessageBuilder(String prefix) {
-		this.prefix = prefix;
+	public MessageBuilder(String tag) {
+		this.tag = tag;
 	}
 	
-	public MessageBuilder(String prefix, String message) {
-		this.prefix = prefix;
+	public MessageBuilder(String tag, String message) {
+		this.tag = tag;
 		this.message = message;
 	}
 	
@@ -27,13 +28,13 @@ public class MessageBuilder {
 	public MessageBuilder setType(MessageType messageType) {
 		switch (messageType) {
 		case DANGER:
-			this.prefix = "§4[§c" + this.prefix + "§4]§r";
+			this.prefix = "§4[§c" + this.tag + "§4]§r";
 			return this;
 		case WARNING:
-			this.prefix = "§6[§e" + this.prefix + "§6]§r";
+			this.prefix = "§6[§e" + this.tag + "§6]§r";
 			break;
 		case COMMON:
-			this.prefix = "§2[§a" + this.prefix + "§2]§r";
+			this.prefix = "§2[§a" + this.tag + "§2]§r";
 			break;
 		}
 		return this;
