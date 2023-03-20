@@ -1,0 +1,65 @@
+/g create [ctf | hp] <game_string>
+
+/g loc [ctf | hp]
+	
+	/g loc ctf <game_string> [red_spawn | blue_spawn] 
+
+	/g loc hp <game_string> [spawn] 
+
+/g sign [ctf | hp]
+
+- Signs' file
+
+ctf:
+	1:
+		x:
+		y:
+		z:
+	2:
+		x:
+		y:
+		z:
+hp:
+	1:
+		x:
+		y:
+		z:
+	2:
+		x:
+		y:
+		z:
+
+
+- Arenas' File
+
+ctf:
+	1:
+		red_spawn:
+			x:
+			y:
+			z:
+		blue_spawn:
+			x:
+			y:
+			z:
+	2:
+		red_spawn:
+			x:
+			y:
+			z:
+		blue_spawn:
+			x:
+			y:
+			z:
+hp:
+	1:
+		spawn:
+			x:
+			y:
+			z:
+
+
+
+
+
+

@@ -2,10 +2,8 @@ package oldschoolproject;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import oldschoolproject.Managers.ConfigurationFile;
-import oldschoolproject.Minigames.CTF;
-import oldschoolproject.Modules.AutoReloader;
-import oldschoolproject.Modules.Loaders.RegistrationLoader;
+import oldschoolproject.utils.AutoReloader;
+import oldschoolproject.utils.loaders.RegistrationLoader;
 
 public class Main extends JavaPlugin {
 	
@@ -27,11 +25,8 @@ public class Main extends JavaPlugin {
 		
 		new AutoReloader();
 		
-		new ConfigurationFile("locations.yml").load();
+//		new SettingsManager("locations.yml").load();
 		
-		// Subject to change to a dinamically instancing
-		new CTF();
-
 		getLogger().info("[Main] Plugin loaded");
 		
 	}
