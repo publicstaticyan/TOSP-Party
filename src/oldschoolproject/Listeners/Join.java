@@ -1,11 +1,13 @@
 package oldschoolproject.Listeners;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import oldschoolproject.Managers.ConfigurationFile;
+import oldschoolproject.Managers.LocationManager;
 import oldschoolproject.Modules.Builders.ItemBuilder;
 import oldschoolproject.Modules.Loaders.Listener.BaseListener;
 
@@ -24,11 +26,11 @@ public class Join extends BaseListener {
 		p.setExp(0);
 		p.setFoodLevel(10);
 		p.setLevel(0);
+				
+//		p.setGameMode(GameMode.ADVENTURE);
 		
-//		p.setGameMode(GameMode.ADVENTURE); TODO
+		p.getInventory().setItem(4, new ItemBuilder(Material.CHEST).setName("§a§lMinigames").toItemStack());
 		
-		p.getInventory().setItem(4, new ItemBuilder(Material.CHEST).setName("§bJogos").toItemStack());
-		
-		p.teleport(ConfigurationFile.getSpawnLocation());
+		p.teleport(LocationManager.getSpawnLocation());
 	}
 }

@@ -6,7 +6,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import oldschoolproject.Modules.Loaders.Listener.BaseListener;
 
-public class PlayerChat extends BaseListener {
+public class ChatEvent extends BaseListener {
 	
 	public static boolean chatPaused = false;
 

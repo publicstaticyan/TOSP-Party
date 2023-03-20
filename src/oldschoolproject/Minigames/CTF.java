@@ -1,6 +1,8 @@
 package oldschoolproject.Minigames;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.SignChangeEvent;
 
 import oldschoolproject.Managers.Game.GameManager;
 import oldschoolproject.Managers.Game.GameType;
@@ -19,25 +21,42 @@ public class CTF extends BaseListener {
 	 * 
 	 */
 	
-	static GameManager gm;
+	/*
+	 * A new game instance must only happen when a player write a new sign
+	 */
+	
+	/*
+	 * A placa é setada ao jogador digitar [ctf] na primeira linha
+	 * 
+	 * Um objeto "ctf" é instanciado
+	 * 
+	 * A localização do bloco da placa é salva na config
+	 * 
+	 * A placa é atualizada
+	 * 
+	 * Ao servidor carregar:
+	 * 
+	 * Ler o arquivo
+	 * 
+	 * Se tiver um bloco de placa na localização então instanciar o objeto "ctf" e atualizar placa
+	 * 
+	 * Se não, apagar localização do arquivo
+	 * 
+	 * 
+	 * 
+	 * Caso placa quebrada, apagar localização do arquivo e finalizar objeto "ctf"
+	 */
+	
+	public GameManager gm;
 
 	public CTF() {
 		gm = new GameManager(GameType.CAPTURE_THE_FLAG, 4, 50, 600);
 	}
 	
-	public static void joinGame(Player p) {
-		gm.addPlayer(p);
-	}
-	
-	public static void quitGame(Player p) {
-		gm.removePlayer(p);
-	}
-	
-	public static void joinGameSpectator(Player p) {
-		gm.addSpectator(p);
-	}
-	
-	public static void quitGameSpectator(Player p) {
-		gm.removeSpectator(p);
+	@EventHandler
+	public void createGame(SignChangeEvent e) {
+		if (e.getLine(0).equalsIgnoreCase("[ctf]")) {
+			
+		}
 	}
 }

@@ -13,7 +13,7 @@ public class ColorScroller
     private ChatColor textColor;
     private boolean upperCaseMid;
     private ScrollType scrollType;
-   
+    
     public ColorScroller(ChatColor textColor, String str, String colorMid, String colorBefore, String colorAfter, boolean bold, boolean upperCaseMid, ScrollType scrollType) {
         this.str = str;   
         this.colorMid = colorMid;

@@ -40,6 +40,9 @@ public class GameManager {
 		this.paused = false;
 		
 		this.gameTimer.startLobbyCoundown();
+		
+		// TODO: Every game object must also have it's corresponding "Lobby Sign" --
+		// Not necessary until dinamic implementation
 	}
 	
 	public void addPlayer(Player p) {
@@ -54,9 +57,9 @@ public class GameManager {
 		}
 		
 		// TODO
-		// teleport to game lobby location
+		// teleport to corresponding lobby location
 		// show only players in the same lobby
-		// use same lobby world
+		// !use same lobby world!
 		
 		playersList.add(p);
 	}

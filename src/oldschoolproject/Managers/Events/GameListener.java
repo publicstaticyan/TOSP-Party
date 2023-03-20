@@ -17,6 +17,8 @@ public class GameListener extends BaseListener {
 	public void gameStageListener(GameStageEvent event) {
 		GameManager gameManager = event.getGameManager();
 		
+		// This code is wrong, it must dinamically send all players to corresponding arena
+		
 //		if (gameManager.getGameType() == GameType.CAPTURE_THE_FLAG) {
 //			if (gameManager.getGameStage() == GameStage.BEGGINING) {
 //				if (Main.getInstance().getConfig().get("locations.cft.lobby") == null) {

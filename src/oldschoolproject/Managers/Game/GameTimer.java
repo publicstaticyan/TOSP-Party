@@ -61,8 +61,7 @@ public class GameTimer {
 					broadcastMessage(mb.setMessage("§7A festa vai começar em §e10 segundos!").setType(MessageType.WARNING).toString());
 					game.setGameStage(GameStage.BEGGINING);
 					
-					// TODO
-					// Teleport players to arena
+					// TODO: Teleport players to arena
 					
 					break;
 					

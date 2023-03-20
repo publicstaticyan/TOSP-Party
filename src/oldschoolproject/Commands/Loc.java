@@ -18,10 +18,10 @@ public class Loc extends BaseCommand {
 		Player p = (Player)sender;
 		Location loc = p.getLocation();
 		
-		int x = loc.getBlockX(); int y = loc.getBlockY(); int z = loc.getBlockZ();
+		double x = loc.getX(); double y = loc.getY(); double z = loc.getZ();
 		
 		if (args.length < 3) {
-			p.sendMessage("§c/loc [set | remove] [spawn | lobby | arena] [game]");
+			p.sendMessage("§c/loc [set | remove] [spawn | lobby | arena] [game: (ctf, hotpotato)]");
 			return;
 		}
 		

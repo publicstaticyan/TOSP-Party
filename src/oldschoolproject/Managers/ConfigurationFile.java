@@ -40,12 +40,4 @@ public class ConfigurationFile {
 	public static FileConfiguration getConfig() {
 		return fileConfiguration;
 	}
-	
-	public static Location getSpawnLocation() {
-		if (getConfig().get("spawn") == null) {
-			return new Location(Bukkit.getWorld("world"), 0, 0, 0);
-		}
-		
-		return new Location(Bukkit.getWorld("world"), getConfig().getInt("spawn.X"), getConfig().getInt("spawn.Y"), getConfig().getInt("spawn.Z"));
-	}
 }

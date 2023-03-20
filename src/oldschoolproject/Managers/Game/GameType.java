@@ -13,8 +13,4 @@ public enum GameType {
 	String getDisplayName() {
 		return displayName;
 	}
-	
-	void beginGame() {
-		
-	}
 }

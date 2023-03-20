@@ -18,7 +18,7 @@ public class Setspawn extends BaseCommand {
 		Player p = (Player)sender;
 		
 		Location loc = p.getLocation();
-		int x = loc.getBlockX(); int y = loc.getBlockY(); int z = loc.getBlockZ();
+		double x = loc.getX(); double y = loc.getY(); double z = loc.getZ();
 		
 		ConfigurationFile.getConfig().set("spawn.X", x);
 		ConfigurationFile.getConfig().set("spawn.Y", y);
