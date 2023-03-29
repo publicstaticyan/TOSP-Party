@@ -2,18 +2,13 @@ package oldschoolproject;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import oldschoolproject.utils.AutoReloader;
-import oldschoolproject.utils.loaders.RegistrationLoader;
+import oldschoolproject.managers.LobbyManager;
+import oldschoolproject.managers.SignManager;
+import oldschoolproject.utils.loaders.AutoReloader;
+import oldschoolproject.utils.loaders.command.CommandLoader;
+import oldschoolproject.utils.loaders.listener.ListenerLoader;
 
 public class Main extends JavaPlugin {
-	
-	/*
-	 * GameSigns:
-	 * 
-	 * As for a first installment I'll handle signs directly from code and not dinamically
-	 * But, a good option would be to manually create the game instances and corresponding signs
-	 *	
-	 */
 	
 	public static Main getInstance() {
 		return getPlugin(Main.class);
@@ -21,11 +16,15 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		
-		new RegistrationLoader();
+		new CommandLoader();
+		
+		new ListenerLoader();
 		
 		new AutoReloader();
 		
-//		new SettingsManager("locations.yml").load();
+		new LobbyManager();
+		
+		new SignManager();
 		
 		getLogger().info("[Main] Plugin loaded");
 		

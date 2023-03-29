@@ -1,11 +1,9 @@
 package oldschoolproject.managers;
 
 import java.io.File;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -13,88 +11,49 @@ import oldschoolproject.Main;
 
 public class SettingsManager {
 	
-	private static final SettingsManager 
-		configuration = new SettingsManager("config"),
-		arenas = new SettingsManager("arenas"),
-		signs = new SettingsManager("signs");
-
-	public static SettingsManager getConfig() {
-		return configuration;
-	}
-
-	public static SettingsManager getArenas() {
-		return arenas;
-	}
-
-	public static SettingsManager getSigns() {
-		return signs;
-	}
-	
+	private FileConfiguration config;
 	private File file;
-	private static FileConfiguration fileConfiguration;
 	
-	public SettingsManager(String fileName) {
-		file = new File(Main.getInstance().getDataFolder(), fileName + ".yml");
+	private SettingsManager(File file, FileConfiguration config) { 
+		this.file = file;
+		this.config = config;
+	}
+	
+	// This is REALLY wrong, but I would like to use the "(T) get" method and I still don't know how to override the
+	// FileConfiguration class "get" method while keeping the my "load" method. So, for now, this is it.
+	
+ 	public static SettingsManager load(String fileName) {
+		File file = new File(Main.getInstance().getDataFolder(), fileName + ".yml");
 		
 		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (Exception e) { e.printStackTrace(); }
+			try { file.createNewFile(); } catch (Exception e) { e.printStackTrace(); }
 		}
 		
-		fileConfiguration = YamlConfiguration.loadConfiguration(file);
+		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+		
+		return new SettingsManager(file, config);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public <T> T get(String path) {
-		return (T) fileConfiguration.get(path);
-	}
-	
-	public Set<String> getKeys() {
-		return fileConfiguration.getKeys(false);
+		return (T) config.get(path);
 	}
 	
 	public void set(String path, Object value) {
-		fileConfiguration.set(path, value);
-		save();
+		config.set(path, value);
+		
+		try { config.save(file); } catch (Exception e) { e.printStackTrace(); }
+	}
+
+	public Location getLocation(String path) {
+		return new Location(Bukkit.getWorld("world"),
+				config.getDouble(path + ".x"),
+				config.getDouble(path + ".y"),
+				config.getDouble(path + ".z"));
 	}
 	
-	public boolean contains(String path) {
-		return fileConfiguration.contains(path);
+	public FileConfiguration getConfig() {
+		return this.config;
 	}
 	
-	public ConfigurationSection createSection(String path) {
-		ConfigurationSection section = fileConfiguration.createSection(path);
-		save();
-		return section;
-	}
-	
-	public ConfigurationSection getSection(String path) {
-		ConfigurationSection section = fileConfiguration.getConfigurationSection(path);
-		return section;
-	}
-	
-	private void save() {
-		try {
-			fileConfiguration.save(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void saveLocation(Location location, ConfigurationSection section) {
-		section.set("world", location.getWorld().getName());
-		section.set("x", location.getX());
-		section.set("y", location.getY());
-		section.set("z", location.getZ());
-	}
-	
-	public static Location loadLocation(ConfigurationSection section) {
-		return new Location(
-				Bukkit.getServer().getWorld(section.getString("world")),
-				section.getDouble("x"),
-				section.getDouble("y"),
-				section.getDouble("z")
-		);
-	}
 }

@@ -8,6 +8,10 @@ import oldschoolproject.utils.ClassGetter;
 
 public class ListenerLoader {
 	
+	public ListenerLoader() {
+		loadListenersAndRegister();
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static void loadListenersAndRegister() {
 		int i = 0;

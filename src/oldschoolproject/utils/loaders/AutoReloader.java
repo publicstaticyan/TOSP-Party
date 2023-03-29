@@ -1,4 +1,4 @@
-package oldschoolproject.utils;
+package oldschoolproject.utils.loaders;
 
 import java.io.File;
 import java.util.HashMap;

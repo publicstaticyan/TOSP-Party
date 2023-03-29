@@ -29,8 +29,6 @@ public class Join extends BaseListener {
 		
 		p.getInventory().setItem(4, new ItemBuilder(Material.CHEST).setName("§a§lMinigames").toItemStack());
 		
-		if (SettingsManager.getConfig().getSection("spawn") != null) {
-			p.teleport(SettingsManager.loadLocation(SettingsManager.getConfig().getSection("spawn")));
-		}
+		// TODO: teleport to spawn
 	}
 }

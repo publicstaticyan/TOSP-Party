@@ -6,7 +6,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class ChatEvent extends BaseListener {
+public class AsyncChat extends BaseListener {
 	
 	public static boolean chatPaused = false;
 
@@ -20,7 +20,7 @@ public class ChatEvent extends BaseListener {
 			return;
 		}
 
-		// Set format
+		// TODO: Set format
 	}
 	
 }

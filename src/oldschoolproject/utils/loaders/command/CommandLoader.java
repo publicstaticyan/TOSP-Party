@@ -17,6 +17,10 @@ import oldschoolproject.utils.ClassGetter;
 public class CommandLoader {
 
 	private static SimpleCommandMap commandMap;
+	
+	public CommandLoader() {
+		loadCommandsAndRegister();
+	}
 
 	@SuppressWarnings("deprecation")
 	public static void loadCommandsAndRegister() {
