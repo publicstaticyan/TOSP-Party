@@ -1,4 +1,4 @@
-package oldschoolproject.managers.game;
+package oldschoolproject.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,25 +10,29 @@ import oldschoolproject.managers.SettingsManager;
 
 public abstract class Lobby {
 	
-	private String game_id;
+	private SettingsManager sm;
+	private String id;
 	private Stage stage;
 	private Minigame minigame;
 	private List<Player> playerList;
 	private List<Sign> entrySigns;
+	int minPlayers, maxPlayers, timeLimit;
 	
-	public Lobby(Minigame minigame, String game_id) {
-		this.game_id = game_id.toLowerCase();
+	public Lobby(Minigame minigame, String id) {
+		this.id = id.toLowerCase();
 		this.minigame = minigame;
 		this.playerList = new ArrayList<>();
 		this.entrySigns = new ArrayList<>();
 		
-		setStage(Stage.WAITING);
+		this.setStage(Stage.WAITING);
 		
 		new Timer(this, 10);
 		
-		SettingsManager sm = SettingsManager.load(lowerCaseTag());
+		this.sm = SettingsManager.load(lowerCaseTag());
 		
-		sm.set(getGame_id(), "");
+		this.setMinPlayers(1);
+		this.setMaxPlayers(1);
+		this.setTimeLimit(60);
 	}
 	
 	public void addSign(Sign entrySign) {
@@ -47,8 +51,8 @@ public abstract class Lobby {
 		return minigame;
 	}
 	
-	public String getGame_id() {
-		return game_id;
+	public String getId() {
+		return this.id;
 	}
 
 	public Stage getStage() {
@@ -71,6 +75,33 @@ public abstract class Lobby {
 	public void join(Player p) {
 		playerList.add(p);
 		this.entrySigns.forEach(sign -> {sign.update();});
+	}
+	
+	public int getMaxPlayers() {
+		return this.maxPlayers;
+	}
+	
+	public int getMinPlayers() {
+		return this.minPlayers;
+	}
+	
+	public void setMaxPlayers(int maxPlayers) {
+		this.maxPlayers = maxPlayers;
+		sm.set(getId() + ".maxPlayers", maxPlayers);
+	}
+	
+	public void setMinPlayers(int minPlayers) {
+		this.minPlayers = minPlayers;
+		sm.set(getId() + ".minPlayers", minPlayers);
+	}
+	
+	public void setTimeLimit(int timeLimit) {
+		this.timeLimit = timeLimit;
+		sm.set(getId() + ".timeLimit", timeLimit);
+	}
+	
+	public void eraseConfig() {
+		sm.set(getId(), null);
 	}
 	
 	public abstract void start();

@@ -1,4 +1,4 @@
-package oldschoolproject.managers.game;
+package oldschoolproject.game;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import oldschoolproject.managers.SignManager;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class LobbySign extends BaseListener {
+public class SignClick extends BaseListener {
 	
 	@EventHandler
 	public void clickSign(PlayerInteractEvent e) {
@@ -24,7 +24,7 @@ public class LobbySign extends BaseListener {
 				Sign sign = (Sign) block.getState();
 				
 				if (SignManager.signIsValid(sign.getLocation())) {
-					p.sendMessage(sign.getLine(1));
+					p.performCommand("game join " + sign.getLine(1));
 				}
 			}
 		}

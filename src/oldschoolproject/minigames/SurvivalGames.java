@@ -1,7 +1,7 @@
 package oldschoolproject.minigames;
 
-import oldschoolproject.managers.game.Lobby;
-import oldschoolproject.managers.game.Minigame;
+import oldschoolproject.game.Lobby;
+import oldschoolproject.game.Minigame;
 
 public class SurvivalGames extends Lobby {
 

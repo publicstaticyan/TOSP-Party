@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 import oldschoolproject.managers.LobbyManager;
 import oldschoolproject.utils.loaders.command.BaseCommand;
 
-public class GameCommand extends BaseCommand {
+public class Game extends BaseCommand {
 
-	public GameCommand() {
+	public Game() {
 		super("game");
 	}
 
@@ -22,23 +22,31 @@ public class GameCommand extends BaseCommand {
 		}
 		
 		if (args[0].equalsIgnoreCase("join")) {
-			if (LobbyManager.join(p, args[1].toLowerCase())) {
-				p.sendMessage("§aVocê entrou no lobby: " + args[1].toLowerCase());
+			
+			if (!LobbyManager.lobbyExists(args[1])) {
+				p.sendMessage("§cEsse lobby não existe");
 				return;
 			}
 			
-			// TODO: Should also do an "already playing" message
-			p.sendMessage("§cLobby invalido");
+			if (LobbyManager.isPlaying(p)) {
+				p.sendMessage("§cVocê não pode entrar em um lobby estando em outro");
+				return;
+			}
+			
+			LobbyManager.join(p, args[1].toLowerCase());
+			p.sendMessage("§aVocê entrou no lobby: " + args[1].toLowerCase());
 			return;
 		}
 		
 		if (args[0].equalsIgnoreCase("quit")) {
-			if (LobbyManager.quit(p)) {
-				p.sendMessage("§aVocê saiu do lobby");
+			
+			if (!LobbyManager.isPlaying(p)) {
+				p.sendMessage("§cVocê não está em nenhum lobby");
 				return;
 			}
 			
-			p.sendMessage("§cVocê não está em nenhum lobby");
+			LobbyManager.quit(p);
+			p.sendMessage("§aVocê saiu do lobby");
 			return;
 		}
 		

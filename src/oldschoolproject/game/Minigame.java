@@ -1,4 +1,4 @@
-package oldschoolproject.managers.game;
+package oldschoolproject.game;
 
 import oldschoolproject.minigames.CTF;
 import oldschoolproject.minigames.SurvivalGames;
@@ -6,33 +6,28 @@ import oldschoolproject.minigames.SurvivalGames;
 public enum Minigame {
 	
 	// Capture_The_Flag("CTF", 4, 20, 1200, new CTF())
-	SURVIVAL_GAMES("CTF", 4, 20, 1200),
-	CAPTURE_THE_FLAG("CTF", 4, 20, 1200);
+	SURVIVAL_GAMES("SurvivalGames", "SG"),
+	CAPTURE_THE_FLAG("Capture the Flag", "CTF");
 	
-	String tag;
-	int minPlayers, maxPlayers, timeLimit;
-	
-	// TODO: Remove the minMax Players and timeLimit from here, put all in Lobby
+	String tag, name;
 	
 	// TODO: In a later release, erase this enum. Create lobbys types based on command inputs
 	
-	Minigame(String tag, int minPlayers, int maxPlayers, int timeLimit) {
+	Minigame(String name, String tag) {
 		this.setTag(tag);
-		this.setMinPlayers(minPlayers);
-		this.setMaxPlayers(maxPlayers);
-		this.timeLimit = timeLimit;
-	}
-	
-	public void setMinPlayers(int minPlayers) {
-		this.minPlayers = minPlayers;
-	}
-	
-	public void setMaxPlayers(int maxPlayers) {
-		this.maxPlayers = maxPlayers;
+		this.setName(name);
 	}
 	
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	public String getTag() {

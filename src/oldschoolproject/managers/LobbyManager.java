@@ -9,8 +9,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import oldschoolproject.Main;
-import oldschoolproject.managers.game.Lobby;
-import oldschoolproject.managers.game.Minigame;
+import oldschoolproject.game.Lobby;
+import oldschoolproject.game.Minigame;
 
 public class LobbyManager {
 	
@@ -24,6 +24,7 @@ public class LobbyManager {
 		int i = 0;
 		
 		for (Minigame minigame : Minigame.values()) {
+			
 			File file = new File(Main.getInstance().getDataFolder(), minigame.getTag().toLowerCase() + ".yml");
 			
 			// If the file exists means that at least 1 lobby of the minigame exists
@@ -40,8 +41,13 @@ public class LobbyManager {
 				}
 			}
 		}
-		
 		Main.getInstance().getLogger().info("[LobbyManager] " + i + " lobbys loaded");
+	}
+	
+	public static void deleteLobby(String gameId) {
+		Lobby lobby = getLobby(gameId);
+		lobby.eraseConfig();
+		lobbyList.remove(lobby);
 	}
 	
 	public static Lobby createLobby(Minigame minigame, String gameId) {
@@ -63,25 +69,14 @@ public class LobbyManager {
 	}
 	
 	public static Lobby getLobby(String gameId) {
-		return lobbyList.stream().filter(lobby -> lobby.getGame_id().equals(gameId)).findFirst().orElse(null);
+		return lobbyList.stream().filter(lobby -> lobby.getId().equals(gameId)).findFirst().orElse(null);
 	}
 	
-	public static boolean join(Player p, String gameId) {
-		if (lobbyExists(gameId)) {
-			if (!isPlaying(p)) {
-				getLobby(gameId).join(p);
-				return true;
-			}
-		}
-		return false;
+	public static void join(Player p, String gameId) {
+		getLobby(gameId).join(p);
 	}
 	
-	public static boolean quit(Player p) {
-		if (isPlaying(p)) {
-			getPlayerLobby(p).quit(p);
-			return true;
-		}
-		
-		return false;
+	public static void quit(Player p) {
+		getPlayerLobby(p).quit(p);
  	}
 }

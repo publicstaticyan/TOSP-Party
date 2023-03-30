@@ -1,4 +1,4 @@
-package oldschoolproject.managers.game;
+package oldschoolproject.game;
 
 public enum Stage {
 	WAITING, BEGINNING, PLAYING, RESETING;

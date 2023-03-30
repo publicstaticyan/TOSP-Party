@@ -2,9 +2,9 @@ package oldschoolproject.minigames;
 
 import org.bukkit.entity.Player;
 
+import oldschoolproject.game.Lobby;
+import oldschoolproject.game.Minigame;
 import oldschoolproject.managers.SettingsManager;
-import oldschoolproject.managers.game.Lobby;
-import oldschoolproject.managers.game.Minigame;
 
 public class CTF extends Lobby {
 	
@@ -27,7 +27,7 @@ public class CTF extends Lobby {
 	@Override
 	public void start() {
 		for (Player all : getPlayerList()) {
-			all.teleport(SettingsManager.load(lowerCaseTag()).getLocation(getGame_id() + ".arena"));
+			all.teleport(SettingsManager.load(lowerCaseTag()).getLocation(getId() + ".arena"));
 			all.sendMessage("§acomeçou!");
 		}
 	}

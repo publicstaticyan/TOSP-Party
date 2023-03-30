@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import oldschoolproject.Main;
-import oldschoolproject.managers.game.Lobby;
+import oldschoolproject.game.Lobby;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
 public class SignManager extends BaseListener {
@@ -29,7 +29,7 @@ public class SignManager extends BaseListener {
 			// So the max players for now is a placeholder
 		
 			sign.setLine(0, "[" + lobby.getMinigame().getTag() + "]");
-			sign.setLine(1, lobby.getGame_id());
+			sign.setLine(1, lobby.getId());
 			sign.setLine(2, lobby.getPlayerList().size() + "/0");
 			sign.setLine(3, lobby.getStage().toString());
 			
