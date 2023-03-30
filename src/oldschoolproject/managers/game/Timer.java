@@ -3,7 +3,6 @@ package oldschoolproject.managers.game;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import oldschoolproject.Main;
-import oldschoolproject.minigames.CTF;
 
 public class Timer {
 	

@@ -29,7 +29,7 @@ public class CommandLoader {
 			commandmapfield.setAccessible(true);
 			commandMap = (SimpleCommandMap) commandmapfield.get(Bukkit.getServer());
 		} catch (Exception e) {
-			Bukkit.getLogger().warning("Erro ao tentar acessar Command Map");
+			Bukkit.getLogger().warning("[CommandLoader] Error when trying to access the Command Map");
 		}
 		int i = 0;
 		for (Class<?> commandClass : (Iterable<Class<?>>) ClassGetter.getClassesForPackage(Main.getInstance(), "oldschoolproject.commands")) {
@@ -44,7 +44,7 @@ public class CommandLoader {
 					}
 					registerCommand((CommandExecutor) command, command.getName(), command.getDescription(), command.getAliases()).setTabCompleter((TabCompleter) command);
 				} catch (Exception e) {
-					Main.getInstance().getLogger().warning("Erro ao carregar o comando " + commandClass.getName() + " (TabCompleter)");
+					Main.getInstance().getLogger().warning("[CommandLoader] Error when registering the command " + commandClass.getName() + " (TabCompleter)");
 				}
 				continue;
 			}
@@ -60,12 +60,12 @@ public class CommandLoader {
 					registerCommand((CommandExecutor) command, command.getName(), command.getDescription(), command.getAliases());
 				} catch (Exception e) {
 					e.printStackTrace();
-					Main.getInstance().getLogger().warning("Erro ao carregar o comando " + commandClass.getName());
+					Main.getInstance().getLogger().warning("[CommandLoader] Error when registering the command " + commandClass.getName());
 				}
 			}
 			i++;
 		}
-		Main.getInstance().getLogger().info("[CommandLoader] " + i + " comandos foram carregados!");
+		Main.getInstance().getLogger().info("[CommandLoader] " + i + " commands loaded");
 	}
 
 	private static PluginCommand registerCommand(CommandExecutor executor, String name, String description, String[] aliases) {
@@ -82,7 +82,7 @@ public class CommandLoader {
 			commandMap.register(name, (Command) command);
 			return command;
 		} catch (Exception e) {
-			Main.getInstance().getLogger().warning("Erro ao registrar o comando " + name);
+			Main.getInstance().getLogger().warning("[CommandLoader] Error when registering the command " + name);
 			return null;
 		}
 	}

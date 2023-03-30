@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import oldschoolproject.managers.SettingsManager;
 import oldschoolproject.utils.builders.ItemBuilder;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 

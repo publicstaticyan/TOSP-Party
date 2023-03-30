@@ -27,12 +27,12 @@ public class ListenerLoader {
 					Bukkit.getPluginManager().registerEvents((Listener) listener, Main.getInstance());
 				} catch (Exception e) {
 					e.printStackTrace();
-					System.out.print("Erro ao carregar o listener " + baseListener.getSimpleName());
+					System.out.print("[ListenerLoader] Error when registering the listener " + baseListener.getSimpleName());
 				}
 				i++;
 			}
 		}
-		Main.getInstance().getLogger().info("[ListenerLoader] " + i + " listeners foram carregados!");
+		Main.getInstance().getLogger().info("[ListenerLoader] " + i + " listeners loaded");
 	}
 
 }

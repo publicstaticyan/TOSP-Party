@@ -21,7 +21,7 @@ public class CTF extends Lobby {
 		
 		// !! Answer in enum class !! 
 		
-		super(Minigame.Capture_The_Flag, game_id);
+		super(Minigame.CAPTURE_THE_FLAG, game_id);
 	}
 
 	@Override

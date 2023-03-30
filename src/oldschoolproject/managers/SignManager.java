@@ -14,16 +14,16 @@ import oldschoolproject.utils.loaders.listener.BaseListener;
 
 public class SignManager extends BaseListener {
 	
-	// TODO: This code is VERY weird, I should refactor is asap
+	// TODO: This code is a little bit weird, I should refactor it
 	
 	public SignManager() {
 		loadSigns();
 	}
 	
-	public static boolean newSign(Sign sign, String gameId) {
-		Lobby lobby = LobbyManager.lobbyExists(gameId);
-		
-		if (lobby != null) {
+	public static Sign newSign(Sign sign, String gameId) {
+		if (LobbyManager.lobbyExists(gameId)) {
+			
+			Lobby lobby = LobbyManager.getLobby(gameId);
 			
 			// Lobby min players and max players should be dynamically managed
 			// So the max players for now is a placeholder
@@ -35,15 +35,26 @@ public class SignManager extends BaseListener {
 			
 			sign.update(true);
 			
-			lobby.addSign(sign);
-			
-			SettingsManager sm = SettingsManager.load("signs");
-			
 			String key = sign.getLocation().getBlockX() + "#" + sign.getLocation().getBlockY() + "#" + sign.getLocation().getBlockZ();
 			
-			sm.set(key, gameId);
+			SettingsManager.load("signs").set(key, gameId);
 			
-			return true;
+			lobby.addSign(sign);
+			
+			return sign;
+		}
+		
+		return null;
+	}
+	
+	// TODO: Refactor this
+	public static boolean signIsValid(Location loc) {
+		for (Lobby lobby : LobbyManager.lobbyList) {
+			for (Sign sign : lobby.getSigns()) {
+				if (sign.getLocation().equals(loc)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -70,16 +81,15 @@ public class SignManager extends BaseListener {
 		
 		File file = new File(Main.getInstance().getDataFolder(), "signs.yml");
 		
-		
 		if (file.exists()) {
 			
+			int i = 0;
+			
 			FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-		
+			
 			for (String signId : config.getKeys(false)) {
 				
-				Lobby lobby = LobbyManager.lobbyExists(config.getString(signId));
-				
-				if (lobby != null) {
+				if (LobbyManager.lobbyExists(config.getString(signId))) {
 					
 					String[] parse = new String[3];
 					parse = signId.split("#");
@@ -91,15 +101,26 @@ public class SignManager extends BaseListener {
 					Location loc = new Location(Bukkit.getWorld("world"), x, y, z);
 					
 					if (!(loc.getBlock().getState() instanceof Sign)) {
-						Main.getInstance().getLogger().info("[Signs] Could not load Sign at " + loc.getX() + " " + loc.getY() + " " + loc.getZ()); 
+						Main.getInstance().getLogger().warning("[SignManager] Could not load sign at X(" + loc.getX() + ") Y(" + loc.getY() + ") Z(" + loc.getZ() + ")"); 
 						continue;
 					}
+					
+					// TODO: Ask Hugo
+					// Does creating new references consume memory? I'm assuming it doesn't
+					// The compiler must replace where the reference is used with it's object property
+					// Something like: newSign(loc.getBlock().getState(), config.getString(signId));
+					
+					// I've done my Google search, but it's like asking the hour and get answered who created the clock
 					
 					Sign sign = (Sign) loc.getBlock().getState();
 					
 					newSign(sign, config.getString(signId));
+					
+					i++;
 				}
 			}
+			
+			Main.getInstance().getLogger().info("[SignManager] " + i + " signs loaded");
 		}
 	}
 }

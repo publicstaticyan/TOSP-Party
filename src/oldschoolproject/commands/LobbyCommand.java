@@ -1,11 +1,11 @@
 package oldschoolproject.commands;
 
-import org.bukkit.block.Sign;
+import java.util.Arrays;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import oldschoolproject.managers.LobbyManager;
-import oldschoolproject.managers.SignManager;
 import oldschoolproject.managers.game.Minigame;
 import oldschoolproject.utils.loaders.command.BaseCommand;
 
@@ -14,13 +14,15 @@ public class LobbyCommand extends BaseCommand {
 	public LobbyCommand() {
 		super("lobby");
 	}
+	
+	// TODO: Reload signs command
 
 	@Override
 	public void onCommand(CommandSender sender, String[] args) {
 		Player p = (Player)sender;
 		
 		if (args.length == 0) {
-			p.sendMessage("§cErro: /lobby [create : remove : list : types : setsign]");
+			p.sendMessage("§cErro: /lobby [create : remove : list : types : reloadsign]");
 			return;
 		}
 		
@@ -30,27 +32,28 @@ public class LobbyCommand extends BaseCommand {
 				return;
 			}
 			
-			Minigame minigame = Minigame.hasTag(args[1]);
+			Minigame minigame = Minigame.getMinigame(args[1]);
 			
-			if (minigame != null) {
+			if (minigame == null) {
+				p.sendMessage("§cEsse minigame não existe");
+				return;
+			}
 				
-				// TODO: This is wrong, createLobby should be a boolean
-				if (LobbyManager.lobbyExists(args[2]) != null) { 
-					p.sendMessage("§cEsse lobby já existe");
-					return;
-				}
-				
-				LobbyManager.createLobby(minigame, args[2]);
-				p.sendMessage("§aLobby criado!");
+			// I thought about hiding the messages in the back-end but it doesn't need to
+			// Since everything related to creating lobbys
+			
+			if (LobbyManager.lobbyExists(args[2])) { 
+				p.sendMessage("§cEsse lobby já existe");
 				return;
 			}
 			
-			p.sendMessage("§cEsse minigame não existe");
+			LobbyManager.createLobby(minigame, args[2]);
+			p.sendMessage("§aLobby criado!");
 			return;
 		}
 		
 		if (args[0].equalsIgnoreCase("remove")) {
-			LobbyManager.join(p, args[1]);
+			
 			return;
 		}
 		
@@ -61,10 +64,7 @@ public class LobbyCommand extends BaseCommand {
 		if (args[0].equalsIgnoreCase("types")) {
 			p.sendMessage("§eAqui estão todos os tipos de lobby que podem ser criados: ");
 			
-			for (Minigame minigame : Minigame.values()) {
-				p.sendMessage("§6- " + minigame.getTag());
-			}
-			
+			Arrays.asList(Minigame.values()).forEach(minigame -> p.sendMessage("§6- " + minigame.getTag()));
 			return;
 		}
 		

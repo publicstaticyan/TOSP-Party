@@ -35,6 +35,10 @@ public abstract class Lobby {
 		this.entrySigns.add(entrySign);
 	}
 	
+	public List<Sign> getSigns() {
+		return this.entrySigns;
+	}
+	
 	public String lowerCaseTag() {
 		return getMinigame().getTag().toLowerCase();
 	}
