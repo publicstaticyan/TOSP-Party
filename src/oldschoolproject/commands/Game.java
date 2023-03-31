@@ -33,6 +33,11 @@ public class Game extends BaseCommand {
 				return;
 			}
 			
+			if (LobbyManager.lobbyIsFull(args[1])) {
+				p.sendMessage("§cO lobby está cheio");
+				return;
+			}
+			
 			LobbyManager.join(p, args[1].toLowerCase());
 			p.sendMessage("§aVocê entrou no lobby: " + args[1].toLowerCase());
 			return;

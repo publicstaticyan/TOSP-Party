@@ -53,7 +53,6 @@ public class LobbyAdmin extends BaseCommand {
 			return;
 		}
 		
-		
 		if (args[0].equalsIgnoreCase("set")) {
 			if (args.length < 3) {
 				p.sendMessage("§cErro: /lobby set [id] [playermin : playermax : timelimit] [value]");

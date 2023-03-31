@@ -61,6 +61,7 @@ public abstract class Lobby {
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		updateSigns();
 	}
 	
 	public List<Player> getPlayerList() {
@@ -69,12 +70,26 @@ public abstract class Lobby {
 	
 	public void quit(Player p) {
 		playerList.remove(p);
-		this.entrySigns.forEach(sign -> {sign.update();});
+		updateSigns();
 	}
 	
 	public void join(Player p) {
 		playerList.add(p);
-		this.entrySigns.forEach(sign -> {sign.update();});
+		updateSigns();
+	}
+	
+	public void updateSigns() {
+		this.entrySigns.forEach(sign -> {
+			generateSign(sign);
+		});
+	}
+	
+	public void generateSign(Sign sign) {
+		sign.setLine(0, "[" + getMinigame().getTag() + "]");
+		sign.setLine(1, getId());
+		sign.setLine(2, getPlayerList().size() + "/" + getMaxPlayers());
+		sign.setLine(3, getStage().toString());
+		sign.update(true);
 	}
 	
 	public int getMaxPlayers() {

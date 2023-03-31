@@ -28,12 +28,7 @@ public class SignManager extends BaseListener {
 			// Lobby min players and max players should be dynamically managed
 			// So the max players for now is a placeholder
 		
-			sign.setLine(0, "[" + lobby.getMinigame().getTag() + "]");
-			sign.setLine(1, lobby.getId());
-			sign.setLine(2, lobby.getPlayerList().size() + "/0");
-			sign.setLine(3, lobby.getStage().toString());
-			
-			sign.update(true);
+			lobby.generateSign(sign);
 			
 			String key = sign.getLocation().getBlockX() + "#" + sign.getLocation().getBlockY() + "#" + sign.getLocation().getBlockZ();
 			
@@ -47,11 +42,17 @@ public class SignManager extends BaseListener {
 		return null;
 	}
 	
+	public static void unbindFromLobby(Sign s) {
+		LobbyManager.lobbyList.forEach(lobby -> {
+			lobby.getSigns().remove(s);
+		});
+	}
+	
 	// TODO: Refactor this
-	public static boolean signIsValid(Location loc) {
+	public static boolean boundToLobby(Sign s) {
 		for (Lobby lobby : LobbyManager.lobbyList) {
 			for (Sign sign : lobby.getSigns()) {
-				if (sign.getLocation().equals(loc)) {
+				if (sign.getLocation().equals(s.getLocation())) {
 					return true;
 				}
 			}

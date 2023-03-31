@@ -26,6 +26,7 @@ public class Timer {
 				} else {
 					counter = seconds;
 					game.start();
+					game.setStage(Stage.BEGINNING);
 					cancel();
 				}
 			}

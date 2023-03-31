@@ -68,6 +68,10 @@ public class LobbyManager {
 		return getLobby(gameId) != null;
 	}
 	
+	public static boolean lobbyIsFull(String gameId) {
+		return getLobby(gameId).getPlayerList().size() == getLobby(gameId).getMaxPlayers();
+	}
+	
 	public static Lobby getLobby(String gameId) {
 		return lobbyList.stream().filter(lobby -> lobby.getId().equals(gameId)).findFirst().orElse(null);
 	}

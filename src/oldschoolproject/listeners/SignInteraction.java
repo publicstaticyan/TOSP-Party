@@ -5,25 +5,56 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import oldschoolproject.managers.LobbyManager;
+import oldschoolproject.managers.SettingsManager;
 import oldschoolproject.managers.SignManager;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class SignClick extends BaseListener {
+public class SignInteraction extends BaseListener {
 	
 	@EventHandler
-	public void clickSign(PlayerInteractEvent e) {
+	public void breakSign(BlockBreakEvent e) {
+		Player p = e.getPlayer();
+		
+		Block block = e.getBlock();
+		
+		if (block.getState() instanceof Sign) {
+			
+			Sign sign = (Sign) e.getBlock().getState();
+			
+			if (SignManager.boundToLobby(sign)) {
+				
+				if (!p.isOp()) {
+					e.setCancelled(true);
+					return;
+				}
+				
+				SettingsManager.load("signs").set(sign.getLocation().getBlockX() + "#" + sign.getLocation().getBlockY() + "#" + sign.getLocation().getBlockZ(), null);
+			
+				SignManager.unbindFromLobby(sign);
+				
+				// TODO: Parei aqui
+				
+				p.sendMessage("§aPlaca removida para o lobby " + sign.getLine(1));
+			}
+		}
+	}
+	
+	@EventHandler
+	public void rightClickSign(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
 		Block block = e.getClickedBlock();
 		Action action = e.getAction();
 		
-		if (action == Action.LEFT_CLICK_BLOCK || action == Action.RIGHT_CLICK_BLOCK) {
+		if (action == Action.RIGHT_CLICK_BLOCK) {
 			if (block.getState() instanceof Sign) {
 				Sign sign = (Sign) block.getState();
 				
-				if (SignManager.signIsValid(sign.getLocation())) {
+				if (SignManager.boundToLobby(sign)) {
 					p.performCommand("game join " + sign.getLine(1));
 				}
 			}
