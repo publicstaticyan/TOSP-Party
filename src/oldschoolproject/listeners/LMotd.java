@@ -5,7 +5,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class Motd extends BaseListener {
+public class LMotd extends BaseListener {
 	
 	@EventHandler
 	public void setMotd(ServerListPingEvent e) {

@@ -1,12 +1,12 @@
-package oldschoolproject.game;
+package oldschoolproject.lobby;
 
-import oldschoolproject.minigames.CTF;
+import oldschoolproject.minigames.CaptureTheFlag;
 import oldschoolproject.minigames.SurvivalGames;
 
 public enum Minigame {
 	
 	// Capture_The_Flag("CTF", 4, 20, 1200, new CTF())
-	SURVIVAL_GAMES("SurvivalGames", "SG"),
+	SURVIVAL_GAMES("Survival Games", "SG"),
 	CAPTURE_THE_FLAG("Capture the Flag", "CTF");
 	
 	String tag, name;
@@ -34,10 +34,10 @@ public enum Minigame {
 		return this.tag;
 	}
 	
-	public Lobby instance(String gameId) {
+	public Lobby instanceNewLobby(String gameId) {
 		switch (this) {
 		case CAPTURE_THE_FLAG:
-			return new CTF(gameId);
+			return new CaptureTheFlag(gameId);
 		case SURVIVAL_GAMES:
 			return new SurvivalGames(gameId);
 		}

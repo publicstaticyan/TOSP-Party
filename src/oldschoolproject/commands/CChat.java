@@ -3,12 +3,12 @@ package oldschoolproject.commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import oldschoolproject.listeners.AsyncChat;
+import oldschoolproject.listeners.LChat;
 import oldschoolproject.utils.loaders.command.BaseCommand;
 
-public class Chat extends BaseCommand {
+public class CChat extends BaseCommand {
 	
-	public Chat() {
+	public CChat() {
 		super("chat");
 	}
 
@@ -29,23 +29,23 @@ public class Chat extends BaseCommand {
 		}
 		
 		if (args[0].equalsIgnoreCase("stop")) {
-			if (AsyncChat.chatPaused) {
+			if (LChat.chatPaused) {
 				sender.sendMessage("§cO chat já está pausado");
 				return;
 			}
 			
-			AsyncChat.chatPaused = true;
+			LChat.chatPaused = true;
 			sender.sendMessage("§aO chat foi pausado");
 			return;
 		}
 		
 		if (args[0].equalsIgnoreCase("resume")) {
-			if (!AsyncChat.chatPaused) {
+			if (!LChat.chatPaused) {
 				sender.sendMessage("§cO chat não está pausado");
 				return;
 			}
 			
-			AsyncChat.chatPaused = false;
+			LChat.chatPaused = false;
 			sender.sendMessage("§aO chat foi despausado");
 			return;
 		}

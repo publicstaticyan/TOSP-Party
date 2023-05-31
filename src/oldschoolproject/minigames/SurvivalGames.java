@@ -1,7 +1,7 @@
 package oldschoolproject.minigames;
 
-import oldschoolproject.game.Lobby;
-import oldschoolproject.game.Minigame;
+import oldschoolproject.lobby.Lobby;
+import oldschoolproject.lobby.Minigame;
 
 public class SurvivalGames extends Lobby {
 
@@ -13,6 +13,11 @@ public class SurvivalGames extends Lobby {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void teleport() {
 		
 	}
 

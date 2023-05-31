@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 import oldschoolproject.managers.LobbyManager;
 import oldschoolproject.utils.loaders.command.BaseCommand;
 
-public class Game extends BaseCommand {
+public class CGame extends BaseCommand {
 
-	public Game() {
+	public CGame() {
 		super("game");
 	}
 
@@ -28,7 +28,7 @@ public class Game extends BaseCommand {
 				return;
 			}
 			
-			if (LobbyManager.isPlaying(p)) {
+			if (LobbyManager.isPlayerPlaying(p)) {
 				p.sendMessage("§cVocê não pode entrar em um lobby estando em outro");
 				return;
 			}
@@ -45,7 +45,7 @@ public class Game extends BaseCommand {
 		
 		if (args[0].equalsIgnoreCase("quit")) {
 			
-			if (!LobbyManager.isPlaying(p)) {
+			if (!LobbyManager.isPlayerPlaying(p)) {
 				p.sendMessage("§cVocê não está em nenhum lobby");
 				return;
 			}

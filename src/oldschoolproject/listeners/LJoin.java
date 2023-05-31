@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import oldschoolproject.utils.builders.ItemBuilder;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class Join extends BaseListener {
+public class LJoin extends BaseListener {
 	
 	@EventHandler
 	public void join(PlayerJoinEvent e) {

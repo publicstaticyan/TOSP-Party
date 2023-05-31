@@ -14,6 +14,8 @@ public class Main extends JavaPlugin {
 		return getPlugin(Main.class);
 	}
 	
+	// TODO: What if I use ObjectOutputStream and save all the lobbys in a data file? :)
+	
 	public void onEnable() {
 		
 		new CommandLoader();

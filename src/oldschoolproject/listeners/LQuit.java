@@ -5,7 +5,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
-public class Quit extends BaseListener {
+public class LQuit extends BaseListener {
 	
 	@EventHandler
 	public void quit(PlayerQuitEvent e) {
