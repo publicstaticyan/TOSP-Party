@@ -3,22 +3,26 @@ package oldschoolproject.lobby;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import oldschoolproject.Main;
 import oldschoolproject.managers.SettingsManager;
 
 public abstract class Lobby {
 	
 	private SettingsManager sm;
 	private String id;
+	private Timer timer;
 	
 	private Stage stage;
 	private Minigame minigame;
 	
 	private List<Player> playerList;
-	private List<Sign> entrySigns;
+	private List<Location> entrySigns;
 	
 	int minPlayers, maxPlayers, timeLimit;
 	
@@ -30,7 +34,7 @@ public abstract class Lobby {
 		
 		this.setStage(Stage.WAITING);
 		
-		new Timer(this);
+		this.timer = new Timer(this);
 		
 		this.sm = SettingsManager.load(lowerCaseTag());
 		
@@ -53,12 +57,13 @@ public abstract class Lobby {
 		return this.minigame.getTag().toLowerCase();
 	}
 	
-	public void updateSign(Sign sign) {
-		sign.setLine(0, "[" + this.minigame.getTag() + "]");
-		sign.setLine(1, this.id);
-		sign.setLine(2, this.playerList.size() + "/" + this.maxPlayers);
-		sign.setLine(3, this.stage.toString());
-		sign.update(true);
+	public void updateSign(Location l) {
+		Sign s = (Sign) l.getBlock().getState();
+			s.setLine(0, "[" + minigame.getTag() + "]");
+			s.setLine(1, id);
+			s.setLine(2, playerList.size() + "/" + maxPlayers);
+			s.setLine(3, stage.toString());
+			s.update(true);
 	}
 	
 	public void setLocation(String key, Location loc) {
@@ -68,14 +73,16 @@ public abstract class Lobby {
 	}
 	
 	public void updateAllSigns() {
-		this.entrySigns.forEach(sign -> { updateSign(sign); });
+		this.entrySigns.forEach(sign -> {
+			updateSign(sign); 
+		});
 	}
 	
 	public void destroy() {
 		sm.set(this.id, null);
 	}
 	
-	public void addSign(Sign entrySign) {
+	public void addSign(Location entrySign) {
 		this.entrySigns.add(entrySign);
 		updateSign(entrySign);
 	}
@@ -116,7 +123,7 @@ public abstract class Lobby {
 		return stage;
 	}
 	
-	public List<Sign> getSigns() {
+	public List<Location> getSigns() {
 		return this.entrySigns;
 	}
 	
@@ -126,6 +133,10 @@ public abstract class Lobby {
 	
 	public int getMinPlayers() {
 		return this.minPlayers;
+	}
+	
+	public Timer getTimer() {
+		return this.timer;
 	}
 	
 	public abstract void teleport();

@@ -8,11 +8,12 @@ import oldschoolproject.Main;
 
 public class Timer {
 	
-	private static final int WAITING_COUNTDOWN_SECONDS = 181;
+	private static final int WAITING_COUNTDOWN_SECONDS = 40;
 	private static final int BEGGINING_COUNTDOWN_SECONDS = 9;
 	private static final int[] MESSAGE_MARKS = {180, 150, 120, 90, 60, 30, 10, 5, 4, 3, 2, 1};
 	private boolean reTry = false;
 	private Lobby game;
+	public int counter;
 	
 	public Timer(Lobby game) {
 		this.game = game;
@@ -20,13 +21,33 @@ public class Timer {
 		countdown();
 	}
 	
+	private void start() {
+		game.start();
+		
+		game.setStage(Stage.PLAYING);
+		
+		this.counter = 0;
+		
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				counter++;
+			}
+		}.runTaskTimer(Main.getInstance(), 0, 20);
+	}
+	
 	private void beggining() {
+		game.teleport();
+		
+		game.setStage(Stage.BEGINNING);
+		
 		sendMessageToAll("§aComeçando em 10 segundos!");
+		
+		this.counter = BEGGINING_COUNTDOWN_SECONDS;
 		
 		new BukkitRunnable() {
 			
-			int counter = BEGGINING_COUNTDOWN_SECONDS;
-			
+			@Override
 			public void run() {
 				
 				if (contains(MESSAGE_MARKS, counter)) {
@@ -34,7 +55,7 @@ public class Timer {
 				}
 				
 				if (counter < 0) {
-					game.start();
+					start();
 					cancel();
 				}
 				
@@ -44,10 +65,11 @@ public class Timer {
 	}
 	
 	private void countdown() {
+		this.counter = WAITING_COUNTDOWN_SECONDS;
+		
 		new BukkitRunnable() {
 			
-			int counter = WAITING_COUNTDOWN_SECONDS;
-			
+			@Override
 			public void run() {
 				if (contains(MESSAGE_MARKS, counter)) {
 					countdownMessage(counter);
@@ -78,9 +100,6 @@ public class Timer {
 				}
 				
 				if (counter < 0) {
-					game.teleport();
-					game.setStage(Stage.BEGINNING);
-					
 					beggining();
 					cancel();
 				}
@@ -119,5 +138,9 @@ public class Timer {
 	
 	private String convertSecondsToMinutes(int sec) {
 	    return String.format("%02d:%02d", sec / 60, sec % 60);
+	}
+	
+	public String getTime() {
+		return convertSecondsToMinutes(this.counter);
 	}
 }

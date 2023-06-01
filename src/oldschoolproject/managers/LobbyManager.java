@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -36,7 +38,9 @@ public class LobbyManager {
 		}
 		
 		Lobby lobby = minigame.instanceNewLobby(gameId);
+		
 		lobbyList.add(lobby);
+		
 		return lobby;
 	}
 	
@@ -48,18 +52,6 @@ public class LobbyManager {
 		if (!value.matches("[0-9]+")) {
 			throw new LobbyOperationException("§cO campo \"value\" deve ser um número inteiro");
 		}
-		
-//		boolean b = false;
-//		String[] possibilities = {"playermin", "playermax", "timelimit"};
-//		for (String p : possibilities) {
-//			if (field.equalsIgnoreCase(p)) {
-//				b = true;
-//			}
-//		}
-//		
-//		if (b) {
-//			throw new LobbyOperationException("§cO campo \"field\" deve ser um valor predefinido");
-//		}
 		
 		switch (field) {
 		case "playermin": {
@@ -89,8 +81,11 @@ public class LobbyManager {
 		}
 		
 		Lobby lobby = getLobby(gameId);
-//		TODO: lobby.eraseLobbyConfig();
-		SignManager.destroyAll(lobby);
+		
+		lobby.destroy();
+		
+		SignManager.unlinkAndDestroyAll(lobby);
+		
 		lobbyList.remove(lobby);
 	}
 	
@@ -122,20 +117,43 @@ public class LobbyManager {
 		p.sendMessage("");
 		p.sendMessage("§eLOBBY LIST: ");
 		p.sendMessage("");
-		// TODO: Code Time class to make "TEMPO" Work
 		p.sendMessage("§7| §cMINIGAME §7| §cID §7| §cSTATUS §7| §cPLAYERS §7| §cTEMPO §7|");
 		p.sendMessage("");
 		 
 		lobbyList.forEach(lobby -> {
-			p.sendMessage("§a" + lobby.getMinigame().getTag() + " §7- §a" + lobby.getId() + " §7- §a" + lobby.getStage().toString() + " §7- §a" + lobby.getPlayerList().size() + "§a/" + lobby.getMaxPlayers() + " §7: §a" + lobby.getMinPlayers());
+			p.sendMessage("§a" + lobby.getMinigame().getTag() + " §7- §a" + lobby.getId() + " §7- §a" + lobby.getStage().toString() + " §7- §a" + lobby.getPlayerList().size() + "§a/" + lobby.getMaxPlayers() + " §7: §a" + lobby.getMinPlayers() + " §7- §a" + lobby.getTimer().getTime());
 		});
 	}
 	
-	public static void join(Player p, String gameId) {
+	public static void addLocationToLobby(String gameId, String keyName, Location loc) throws LobbyOperationException {
+		if (!lobbyExists(gameId)) {
+			throw new LobbyOperationException("O lobby não existe");
+		}
+		
+		LobbyManager.getLobby(gameId).setLocation(keyName, loc);
+	}
+	
+	public static void join(Player p, String gameId) throws LobbyOperationException {
+		if (!lobbyExists(gameId)) {
+			throw new LobbyOperationException("O lobby não existe");
+		}
+		
+		if (isPlayerPlaying(p)) {
+			throw new LobbyOperationException("Você já está em um lobby");
+		}
+		
+		if (lobbyIsFull(gameId)) {
+			throw new LobbyOperationException("O lobby está lotado");
+		}
+		
 		getLobby(gameId).join(p);
 	}
 	
-	public static void quit(Player p) {
+	public static void quit(Player p) throws LobbyOperationException {
+		if (!isPlayerPlaying(p)) {
+			throw new LobbyOperationException("Você não está em um lobby");
+		}
+		
 		getPlayerLobby(p).quit(p);
  	}
 
@@ -146,9 +164,7 @@ public class LobbyManager {
 			
 			File file = new File(Main.getInstance().getDataFolder(), minigame.getTag().toLowerCase() + ".yml");
 			
-			// File exists = at least 1 lobby of minigame exists
-			
-			if (file.exists()) {
+			if (file.exists()) { // File exists = at least 1 lobby of minigame exists
 				
 				FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 				
@@ -161,13 +177,5 @@ public class LobbyManager {
 			}
 		}
 		Main.getInstance().getLogger().info("[LobbyManager] " + i + " lobbys loaded");
-	}
-
-	public static void addLocationToLobby(String gameId, String keyName, Location loc) throws LobbyOperationException {
-		if (!lobbyExists(gameId)) {
-			throw new LobbyOperationException("O lobby não existe");
-		}
-		
-		LobbyManager.getLobby(gameId).setLocation(keyName, loc);
 	}
 }

@@ -1,6 +1,8 @@
 package oldschoolproject.managers;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,10 +16,6 @@ import oldschoolproject.utils.loaders.listener.BaseListener;
 
 public class SignManager extends BaseListener {
 	
-	// TODO: Refactor this code
-	
-	// TODO: 
-	
 	/*
 	 * lobby-key:
 	 * 	signs:
@@ -28,43 +26,46 @@ public class SignManager extends BaseListener {
 		loadSigns();
 	}
 	
-	public static Sign newSign(Sign sign, String gameId) {
-		if (LobbyManager.lobbyExists(gameId)) {
+	public static void registerSign(Location loc, String gameId) {
+		Lobby lobby = LobbyManager.getLobby(gameId);
+		
+		lobby.addSign(loc);
+	}
+	
+	public static void saveSign(Location loc, String gameId) {
+			registerSign(loc, gameId);
 			
-			Lobby lobby = LobbyManager.getLobby(gameId);
-			
-			lobby.addSign(sign);
-			
-			String key = sign.getLocation().getBlockX() + "#" + sign.getLocation().getBlockY() + "#" + sign.getLocation().getBlockZ();
+			String key = loc.getBlockX() + "#" + loc.getBlockY() + "#" + loc.getBlockZ();
 			
 			SettingsManager.load("signs").set(key, gameId);
-			
-			return sign;
-		}
+	}
+	
+	public static void unlinkAndDestroyAll(Lobby lobby) {
+		lobby.getSigns().forEach(sign -> {
+			destroy(sign);
+		});
 		
-		return null;
+		lobby.getSigns().clear();
 	}
 	
-	public static void destroyAll(Lobby l) {
-		for (Sign s : l.getSigns()) {
-			SettingsManager.load("signs").set(s.getLocation().getBlockX() + "#" + s.getLocation().getBlockY() + "#" + s.getLocation().getBlockZ(), null);
-			LobbyManager.lobbyList.forEach(lobby -> { lobby.getSigns().remove(s); });
-		}
+	public static void unlink(Location s) {
+		// Maybe update the sign to display : "Unlinked" ?
+		
+		LobbyManager.lobbyList.forEach(lobby -> {
+			lobby.getSigns().remove(s);
+		});
 	}
 	
-	public static void unbindFromLobby(Sign s) {
-		SettingsManager.load("signs").set(s.getLocation().getBlockX() + "#" + s.getLocation().getBlockY() + "#" + s.getLocation().getBlockZ(), null);
-		LobbyManager.lobbyList.forEach(lobby -> { lobby.getSigns().remove(s); });
+	public static void destroy(Location s) {
+		SettingsManager.load("signs").set(s.getBlockX() + "#" + s.getBlockY() + "#" + s.getBlockZ(), null);
 	}
 	
-	// TODO: Refactor this
-	public static boolean isBoundToLobby(Sign s) {
+	public static void unlinkAndDestroy(Location s) {
+		unlink(s); destroy(s);
+	}
+	
+	public static boolean isLinkedToLobby(Location s) {
 		return LobbyManager.lobbyList.stream().map(Lobby::getSigns).anyMatch(signs -> signs.contains(s));
-//		for (Lobby lobby : LobbyManager.lobbyList) {
-//			if (lobby.getSigns().contains(s)) {
-//				return true;
-//			}
-//		}
 	}
 	
 	public void loadSigns() {
@@ -83,17 +84,14 @@ public class SignManager extends BaseListener {
 			
 			for (String signId : config.getKeys(false)) {
 				
-				if (!LobbyManager.lobbyExists(config.getString(signId))) {
+				if (LobbyManager.lobbyExists(config.getString(signId))) {
 					
-					continue;
-				}
-					
-				String[] parse = new String[3];
-				parse = signId.split("#");
+				String[] coords = new String[3]; // x#y#z -> [x, y, z]
+				coords = signId.split("#");
 				
-				double x = Double.parseDouble(parse[0]);
-				double y = Double.parseDouble(parse[1]);
-				double z = Double.parseDouble(parse[2]);
+				double x = Double.parseDouble(coords[0]);
+				double y = Double.parseDouble(coords[1]);
+				double z = Double.parseDouble(coords[2]);
 				
 				Location loc = new Location(Bukkit.getWorld("world"), x, y, z);
 				
@@ -102,11 +100,11 @@ public class SignManager extends BaseListener {
 					continue;
 				}
 				
-				Sign sign = (Sign) loc.getBlock().getState();
-				
-				newSign(sign, config.getString(signId));
+				registerSign(loc, config.getString(signId));
 				
 				i++;
+				
+				}
 			}
 			
 			Main.getInstance().getLogger().info("[SignManager] " + i + " signs loaded");
