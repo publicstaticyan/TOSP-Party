@@ -32,7 +32,7 @@ public class LSign extends BaseListener {
 				return;
 			}
 			
-			SignManager.saveSign(e.getBlock().getLocation(), e.getLine(1));
+			SignManager.create(e.getBlock().getLocation(), e.getLine(1));
 			
 			p.sendMessage("§aPlaca de entrada criada para o lobby: " + e.getLine(1));
 			e.setCancelled(true);
@@ -48,6 +48,9 @@ public class LSign extends BaseListener {
 		
 		if (block.getState() instanceof Sign) {
 			
+			// essa placa está em alguma lista de placas de algum lobby existente?
+			
+			// pode ser refatorado por: "Esse lobby de id tal (getLine(1)) tem em sua lista de placas essa placa? 
 			if (SignManager.isLinkedToLobby(block.getLocation())) {
 				
 				if (!p.isOp()) {
@@ -55,7 +58,8 @@ public class LSign extends BaseListener {
 					return;
 				}
 				
-				SignManager.unlinkAndDestroy(block.getLocation());
+				// 
+				SignManager.destroy(block.getLocation());
 				
 				// TODO: Parei aqui
 				

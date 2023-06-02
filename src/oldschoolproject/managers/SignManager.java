@@ -1,8 +1,6 @@
 package oldschoolproject.managers;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,69 +9,45 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import oldschoolproject.Main;
-import oldschoolproject.lobby.Lobby;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
 public class SignManager extends BaseListener {
-	
-	/*
-	 * lobby-key:
-	 * 	signs:
-	 * 		x#y#z: x y z
-	 */
-	
+
 	public SignManager() {
 		loadSigns();
 	}
 	
-	public static void registerSign(Location loc, String gameId) {
-		Lobby lobby = LobbyManager.getLobby(gameId);
-		
-		lobby.addSign(loc);
-	}
-	
-	public static void saveSign(Location loc, String gameId) {
-			registerSign(loc, gameId);
-			
-			String key = loc.getBlockX() + "#" + loc.getBlockY() + "#" + loc.getBlockZ();
-			
-			SettingsManager.load("signs").set(key, gameId);
-	}
-	
-	public static void unlinkAndDestroyAll(Lobby lobby) {
-		lobby.getSigns().forEach(sign -> {
-			destroy(sign);
-		});
-		
-		lobby.getSigns().clear();
-	}
-	
-	public static void unlink(Location s) {
-		// Maybe update the sign to display : "Unlinked" ?
-		
-		LobbyManager.lobbyList.forEach(lobby -> {
-			lobby.getSigns().remove(s);
-		});
-	}
-	
-	public static void destroy(Location s) {
+	// Um lobby é apagado
+	public static void erase(Location s) {
 		SettingsManager.load("signs").set(s.getBlockX() + "#" + s.getBlockY() + "#" + s.getBlockZ(), null);
 	}
 	
-	public static void unlinkAndDestroy(Location s) {
-		unlink(s); destroy(s);
+	// Um player destroi a placa
+	public static void destroy(Location s) {
+		LobbyManager.getLobby(((Sign) s.getBlock().getState()).getLine(1).toLowerCase()).removeSign(s);
+		
+		erase(s);
+	}
+	
+	// O servidor carrega
+	public static void link(Location s, String gameId) {
+		LobbyManager.getLobby(gameId).addSign(s);
+	}
+	
+	// Um player cria uma placa
+	public static void create(Location s, String gameId) {
+		link(s, gameId);
+		
+		SettingsManager.load("signs").set(s.getBlockX() + "#" + s.getBlockY() + "#" + s.getBlockZ(), gameId);
 	}
 	
 	public static boolean isLinkedToLobby(Location s) {
-		return LobbyManager.lobbyList.stream().map(Lobby::getSigns).anyMatch(signs -> signs.contains(s));
+		return LobbyManager.getLobby(((Sign) s.getBlock().getState()).getLine(1).toLowerCase()).getSigns().contains(s);
+		
+//		return LobbyManager.lobbyList.stream().map(Lobby::getSigns).anyMatch(signs -> signs.contains(s));
 	}
 	
 	public void loadSigns() {
-		// Signs ID's are their location in the world
-		
-		// The code should look for the key, check if the lobby exists,
-		// If it does, then generate the sign at the location
-		
 		File file = new File(Main.getInstance().getDataFolder(), "signs.yml");
 		
 		if (file.exists()) {
@@ -100,7 +74,7 @@ public class SignManager extends BaseListener {
 					continue;
 				}
 				
-				registerSign(loc, config.getString(signId));
+				link(loc, config.getString(signId));
 				
 				i++;
 				

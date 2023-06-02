@@ -3,13 +3,10 @@ package oldschoolproject.lobby;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import oldschoolproject.Main;
 import oldschoolproject.managers.SettingsManager;
 
 public abstract class Lobby {
@@ -78,13 +75,13 @@ public abstract class Lobby {
 		});
 	}
 	
-	public void destroy() {
-		sm.set(this.id, null);
-	}
-	
 	public void addSign(Location entrySign) {
 		this.entrySigns.add(entrySign);
 		updateSign(entrySign);
+	}
+	
+	public void removeSign(Location entrySign) {
+		this.entrySigns.remove(entrySign);
 	}
 	
 	public void setStage(Stage stage) {
@@ -137,6 +134,10 @@ public abstract class Lobby {
 	
 	public Timer getTimer() {
 		return this.timer;
+	}
+	
+	public SettingsManager getSettingsManager() {
+		return this.sm;
 	}
 	
 	public abstract void teleport();

@@ -3,12 +3,9 @@ package oldschoolproject.managers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -71,10 +68,6 @@ public class LobbyManager {
 		}
 	}
 	
-	public static Lobby getLobby(String gameId) {
-		return lobbyList.stream().filter(lobby -> lobby.getId().equals(gameId)).findFirst().orElse(null);
-	}
-	
 	public static void deleteLobby(String gameId) throws LobbyOperationException {
 		if (!lobbyExists(gameId)) {
 			throw new LobbyOperationException("O lobby não existe");
@@ -82,11 +75,15 @@ public class LobbyManager {
 		
 		Lobby lobby = getLobby(gameId);
 		
-		lobby.destroy();
+		lobby.getSettingsManager().set(lobby.getId(), null);
 		
-		SignManager.unlinkAndDestroyAll(lobby);
+		lobby.getSigns().forEach(sign -> SignManager.erase(sign));
 		
 		lobbyList.remove(lobby);
+	}
+	
+	public static Lobby getLobby(String gameId) {
+		return lobbyList.stream().filter(lobby -> lobby.getId().equals(gameId)).findFirst().orElse(null);
 	}
 	
 	public static boolean lobbyExists(String gameId) {

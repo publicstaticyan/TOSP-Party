@@ -42,9 +42,9 @@ public class CLobby extends BaseCommand {
 			return;
 		}
 		
-		if (args[0].equalsIgnoreCase("remove")) {
+		if (args[0].equalsIgnoreCase("delete")) {
 			if (args.length < 2) {
-				p.sendMessage("§cErro: /lobby remove [id]");
+				p.sendMessage("§cErro: /lobby delete [id]");
 				return;
 			}
 			

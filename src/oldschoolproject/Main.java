@@ -10,6 +10,14 @@ import oldschoolproject.utils.loaders.listener.ListenerLoader;
 
 public class Main extends JavaPlugin {
 	
+	/*
+	 * TODO List
+	 * - Sign - Lobby System
+	 * - Minigame
+	 * 
+	 * 
+	 */
+	
 	public static Main getInstance() {
 		return getPlugin(Main.class);
 	}
