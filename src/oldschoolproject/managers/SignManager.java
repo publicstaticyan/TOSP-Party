@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import oldschoolproject.Main;
+import oldschoolproject.lobby.Lobby;
 import oldschoolproject.utils.loaders.listener.BaseListener;
 
 public class SignManager extends BaseListener {
@@ -20,6 +21,8 @@ public class SignManager extends BaseListener {
 	// Um lobby é apagado
 	public static void erase(Location s) {
 		SettingsManager.load("signs").set(s.getBlockX() + "#" + s.getBlockY() + "#" + s.getBlockZ(), null);
+		
+		Sign si = (Sign) s.getBlock().getState();
 	}
 	
 	// Um player destroi a placa
@@ -42,9 +45,7 @@ public class SignManager extends BaseListener {
 	}
 	
 	public static boolean isLinkedToLobby(Location s) {
-		return LobbyManager.getLobby(((Sign) s.getBlock().getState()).getLine(1).toLowerCase()).getSigns().contains(s);
-		
-//		return LobbyManager.lobbyList.stream().map(Lobby::getSigns).anyMatch(signs -> signs.contains(s));
+		return LobbyManager.lobbyList.stream().map(Lobby::getSigns).anyMatch(signs -> signs.contains(s));
 	}
 	
 	public void loadSigns() {

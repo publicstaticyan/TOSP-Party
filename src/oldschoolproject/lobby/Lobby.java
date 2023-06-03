@@ -11,7 +11,6 @@ import oldschoolproject.managers.SettingsManager;
 
 public abstract class Lobby {
 	
-	private SettingsManager sm;
 	private String id;
 	private Timer timer;
 	
@@ -21,7 +20,7 @@ public abstract class Lobby {
 	private List<Player> playerList;
 	private List<Location> entrySigns;
 	
-	int minPlayers, maxPlayers, timeLimit;
+	private int minPlayers, maxPlayers, timeLimit;
 	
 	public Lobby(Minigame minigame, String id) {
 		this.id = id.toLowerCase();
@@ -32,12 +31,6 @@ public abstract class Lobby {
 		this.setStage(Stage.WAITING);
 		
 		this.timer = new Timer(this);
-		
-		this.sm = SettingsManager.load(lowerCaseTag());
-		
-		this.setMinPlayers(1);
-		this.setMaxPlayers(1);
-		this.setTimeLimit(60);
 	}
 	
 	public void quit(Player p) {
@@ -50,7 +43,7 @@ public abstract class Lobby {
 		updateAllSigns();
 	}
 	
-	public String lowerCaseTag() {
+	public String getLowerCaseTag() {
 		return this.minigame.getTag().toLowerCase();
 	}
 	
@@ -61,12 +54,6 @@ public abstract class Lobby {
 			s.setLine(2, playerList.size() + "/" + maxPlayers);
 			s.setLine(3, stage.toString());
 			s.update(true);
-	}
-	
-	public void setLocation(String key, Location loc) {
-		sm.set(this.id + ".locations." + key + ".x", loc.getX());
-		sm.set(this.id + ".locations." + key + ".y", loc.getY());
-		sm.set(this.id + ".locations." + key + ".z", loc.getZ());
 	}
 	
 	public void updateAllSigns() {
@@ -91,17 +78,14 @@ public abstract class Lobby {
 	
 	public void setMaxPlayers(int maxPlayers) {
 		this.maxPlayers = maxPlayers;
-		sm.set(this.id + ".maxPlayers", maxPlayers);
 	}
 	
 	public void setMinPlayers(int minPlayers) {
 		this.minPlayers = minPlayers;
-		sm.set(this.id + ".minPlayers", minPlayers);
 	}
 	
 	public void setTimeLimit(int timeLimit) {
 		this.timeLimit = timeLimit;
-		sm.set(this.id + ".timeLimit", timeLimit);
 	}
 	
 	public List<Player> getPlayerList() {
@@ -134,10 +118,6 @@ public abstract class Lobby {
 	
 	public Timer getTimer() {
 		return this.timer;
-	}
-	
-	public SettingsManager getSettingsManager() {
-		return this.sm;
 	}
 	
 	public abstract void teleport();

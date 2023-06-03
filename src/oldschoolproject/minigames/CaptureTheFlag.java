@@ -20,7 +20,7 @@ public class CaptureTheFlag extends Lobby {
 	@Override
 	public void teleport() {
 		for (Player all : getPlayerList()) {
-			all.teleport(SettingsManager.load(lowerCaseTag()).getLocation(getId() + ".arena"));
+			all.teleport(SettingsManager.load(getLowerCaseTag()).getLocation(getId() + ".arena"));
 			all.sendMessage("§acomeçou!");
 		}
 	}

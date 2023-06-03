@@ -21,7 +21,7 @@ public class CLobby extends BaseCommand {
 		Player p = (Player)sender;
 		
 		if (args.length == 0) {
-			p.sendMessage("§cErro: /lobby [create : remove : list : setloc : tags : set]");
+			p.sendMessage("§cErro: /lobby [create : remove : list : tags : set]");
 			return;
 		}
 		
@@ -88,7 +88,7 @@ public class CLobby extends BaseCommand {
 		
 		if (args[0].equalsIgnoreCase("set")) {
 			if (args.length <= 3) {
-				p.sendMessage("§cErro: /lobby set [id] [playermin : playermax : timelimit] [value]");
+				p.sendMessage("§cErro: /lobby set [id] [playermin : playermax : timelimit : location] [value]");
 				return;
 			}
 			

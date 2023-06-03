@@ -28,7 +28,7 @@ public class LSign extends BaseListener {
 			}
 			
 			if (!LobbyManager.lobbyExists(e.getLine(1))) {
-				p.sendMessage("§cLobby '" + e.getLine(1) + "' não encontrado");
+				p.sendMessage("§cLobby " + e.getLine(1) + " não encontrado");
 				return;
 			}
 			
