@@ -1,3 +1,5 @@
+![party](https://github.com/Suvacco/TOSP-Party/assets/21000046/98a0231f-9f6b-4e15-8bb0-76bc50fddc9c)
+
 # TOSP-Party
 
 This plugin recreates the old style of lobbys and implements some classic 2012-ish minigames
