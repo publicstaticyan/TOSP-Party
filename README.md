@@ -1,4 +1,4 @@
-# OS Minigames
+# TOSP-Party
 
 This plugin recreates the old style of lobbys and implements some classic 2012-ish minigames
 
